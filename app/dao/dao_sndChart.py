@@ -21,7 +21,9 @@ class Database:
                           SELECT A.STOCKNAME, A.DATE, B.ADJRATIO 
                                , B.OPEN, B.HIGH, B.LOW, B.CLOSE
                                , C.VOLUME
-                                        
+                               , C.FOREI
+                               , C.INS, C.PER, C.YG, C.SAMO, C.TUSIN, C.FINAN, C.BANK, C.INSUR, C.OTHERCORPOR, C.OTHERFOR, C.OTHERFINAN
+                            
                             FROM
                             (
                                SELECT A.STOCKNAME, A.STOCKCODE, DIX.DATE
@@ -29,10 +31,10 @@ class Database:
                             
                                JOIN (
                             
-                                  SELECT DATE   
-                                    FROM jazzdb.T_DATE_INDEXED
-                                  WHERE CNT BETWEEN 0 AND 300
-                                  
+                                 SELECT DATE   
+                                  FROM jazzdb.T_DATE_INDEXED
+                                 WHERE CNT BETWEEN 0 AND 299
+                            
                                ) DIX 
                             
                                WHERE 1=1
@@ -48,8 +50,10 @@ class Database:
                             
                             JOIN (
                                SELECT STOCKCODE, DATE, VOLUME
+                               , FOREI, INS, PER, YG, SAMO, TUSIN, FINAN, BANK, INSUR, NATION, OTHERCORPOR, OTHERFOR, OTHERFINAN
                                FROM jazzdb.T_STOCK_SND_DAY
-                            ) C ON (A.STOCKCODE = C.STOCKCODE AND A.DATE = C.DATE );
+                            ) C ON (A.STOCKCODE = C.STOCKCODE AND A.DATE = C.DATE )
+                            ;
         ''' % (code,code)
         cursor.execute(query)
         rt = {'result':
