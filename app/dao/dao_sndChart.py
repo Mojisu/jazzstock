@@ -1,19 +1,19 @@
-import pyodbc
+#import pyodbc
+import mysql.connector as mc
+
 class Database:
     def __init__(self):
         ip = '106.10.39.168'
-        port = '3306'
         id = 'root'
         pw = 'coffee'
         dbScheme = 'jazzdb'
-        driver = 'MySQL ODBC 5.3 ANSI Driver'
 
-
-        self.cnxn =  pyodbc.connect('DRIVER={MySQL ODBC 5.3 ANSI Driver};PORT=%s;SERVER=%s;DATABASE=%s;UID=%s;PWD=%s' % (
-        port, ip, dbScheme, id, pw))
+        # self.cnxn = mc.connect(host=ip, database=dbScheme, user=id, password=pw)
+        # self.cnxn =  pyodbc.connect('DRIVER={MySQL ODBC 5.3 ANSI Driver};PORT=%s;SERVER=%s;DATABASE=%s;UID=%s;PWD=%s' % (port, ip, dbScheme, id, pw))
 
 
     def list_employees(self, code):
+        self.cnxn = mc.connect(host=self.ip, database=self.dbScheme, user=self.id, password=self.pw)
         cursor = self.cnxn.cursor()
         query = '''
                           SELECT A.STOCKNAME, A.DATE, B.ADJRATIO 
@@ -50,10 +50,12 @@ class Database:
                             ) C ON (A.STOCKCODE = C.STOCKCODE AND A.DATE = C.DATE );
         ''' % (code,code)
         cursor.execute(query)
-        return {'result':
+        rt = {'result':
                     [dict(zip([column[0] for column in cursor.description], row))
                      for row in cursor.fetchall()]}
 
+        self.cnxn.close()
+        return rt
 def employees(code=None):
 
     def db_query():
