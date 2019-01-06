@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<script>
+function menu_click(str){
+  if(str=="sndChart") {
+    menu_form.action = "{{ url_for('sndChart') }}";
+  } else if(str=="sampledb") {
+    menu_form.action = "{{ url_for('sampledb') }}";
+  }
+}
+</script>
+
+<html>
+  <head>
+    <title>JazzStock</title>
+    <strong><link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"></strong>
+  </head>
+  <body>
+    <form action="" method="post" class="form" name="menu_form">
+    <header>
+          <input type="text" placeholder="종목" name="StockID" value="{{ request.form.StockID }}" style="margin-left: 30%; width: 20%;">
+          <input type="submit" value="Search" class="search">
+    </header>
+    <strong><nav>
+    <ul class="menu">
+      <li><a href="{{ url_for('home') }}">Home</a></li>
+      <li><input type="submit" value="S&D Chart" onclick='menu_click("sndChart");'></li>
+      <li><input type="submit" value="sampledb" onclick='menu_click("sampledb");'></li>
+    </ul>
+    </nav></strong>
+    </form>
+    <div class="container">
+      {% block content %}
+      {% endblock %}
+    </div>
+  </body>
+</html>

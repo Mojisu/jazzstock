@@ -1,0 +1,125 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #444;
+}
+
+/*
+ * Create dark grey header with a white logo
+ */
+
+header {
+  background-color: #2B2B2B;
+  height: 60px;
+  width: 100%;
+  opacity: .9;
+}
+
+header h1.logo {
+  margin: 0;
+  font-size: 1.7em;
+  color: #fff;
+  text-transform: uppercase;
+  float: left;
+}
+
+header h1.logo:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+/*
+ * Center the body content
+ */
+.container {
+  width: 940px;
+  margin: 0 auto;
+}
+
+div.jumbo {
+  padding: 10px 0 30px 0;
+  background-color: #eeeeee;
+  -webkit-border-radius: 6px;
+     -moz-border-radius: 6px;
+          border-radius: 6px;
+}
+
+h2 {
+  font-size: 3em;
+  margin-top: 40px;
+  text-align: center;
+  letter-spacing: -2px;
+}
+
+h3 {
+  font-size: 1.7em;
+  font-weight: 100;
+  margin-top: 30px;
+  text-align: center;
+  letter-spacing: -1px;
+  color: #999;
+}
+
+/*
+ * Display navigation links inline
+ */
+.menu {
+  background-color: #eeeeee;
+  height: 30px;
+  margin-top: 0;
+  margin-bottom: 10px;
+  padding-top: 10px;
+  padding-left: 30%;
+}
+
+.menu li {
+  display: inline;
+}
+
+.menu li + li {
+  margin-left: 20%
+}
+
+.menu li a {
+  color: #999;
+  text-decoration: none;
+}
+
+ th {
+  background-color: #98B5A3;
+  color: white;
+  width: 100px;
+}
+
+tr:nth-child(even) {
+    background-color: #EFFFF3;
+}
+
+.sndChart {
+    width: 1000px;
+    height: 500px;
+}
+
+input[type=text] {
+    width: 50%;
+    padding: 10px 10px;
+    margin: 10px 10px;
+}
+
+.search {
+    background-color: #98B5A3;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    margin: 10px 10px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+input[type=button], input[type=submit], input[type=reset] {
+    background-color: #eeeeee;
+    border: none;
+    color: #999;
+    text-decoration: border;
+}
