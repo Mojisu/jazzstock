@@ -3,17 +3,19 @@ import mysql.connector as mc
 
 class Database:
     def __init__(self):
-        ip = '106.10.39.168'
-        id = 'root'
-        pw = 'coffee'
-        dbScheme = 'jazzdb'
+
+        print('hi')
 
         # self.cnxn = mc.connect(host=ip, database=dbScheme, user=id, password=pw)
         # self.cnxn =  pyodbc.connect('DRIVER={MySQL ODBC 5.3 ANSI Driver};PORT=%s;SERVER=%s;DATABASE=%s;UID=%s;PWD=%s' % (port, ip, dbScheme, id, pw))
 
 
     def list_employees(self, code):
-        self.cnxn = mc.connect(host=self.ip, database=self.dbScheme, user=self.id, password=self.pw)
+        ip = '106.10.39.168'
+        id = 'root'
+        pw = 'coffee'
+        dbScheme = 'jazzdb'
+        self.cnxn = mc.connect(host=ip, database=dbScheme, user=id, password=pw)
         cursor = self.cnxn.cursor()
         query = '''
                           SELECT A.STOCKNAME, A.DATE, B.ADJRATIO 
@@ -56,6 +58,8 @@ class Database:
 
         self.cnxn.close()
         return rt
+
+
 def employees(code=None):
 
     def db_query():
