@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+  
+{% block content %}
+<div id="chart" class="sndChart"></div>
+<script type="text/javascript" src="static/js/echarts.min.js"></script>
+<script type="text/javascript" src="static/js/sndChart.js"></script>
+<script>
+window.onload = search({{ sampledata.result|tojson }});
+</script>
+{% endblock %}

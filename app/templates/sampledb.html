@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<table>
+    <tr>
+        <th>종목명</th>
+        <th>DATE</th>
+        <th>ADJRATIO</th>
+        <th>OPEN</th>
+        <th>HIGH</th>
+        <th>LOW</th>
+        <th>CLOSE</th>
+        <th>VOLUME</th>
+    </tr>
+    {% for value in sampledata.result %}
+    <tr>
+        <td>{{ value['STOCKNAME'] }}</td>
+        <td>{{ value['DATE'] }}</td>
+        <td>{{ value['ADJRATIO'] }}</td>
+        <td>{{ value['OPEN'] }}</td>
+        <td>{{ value['HIGH'] }}</td>
+        <td>{{ value['LOW'] }}</td>
+        <td>{{ value['CLOSE'] }}</td>
+        <td>{{ value['VOLUME'] }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
