@@ -41,8 +41,23 @@ def get_stake_info(code):
 
 # Main
 #
-query = "SELECT * FROM jazzdb.T_STOCK_CODE_MGMT WHERE LISTED = '1'LIMIT 0,5000"
 
+
+
+query = """
+
+                    SELECT A.STOCKCODE, A.STOCKNAME
+                    FROM jazzdb.T_STOCK_CODE_MGMT A
+                    WHERE 1=1
+                    AND A.STOCKCODE NOT IN (
+
+                        SELECT STOCKCODE
+                        FROM jazzdb.T_STOCK_SHARES_INFO
+                        WHERE DATE = '%s'
+                        GROUP BY STOCKCODE
+                    )
+                    AND A.LISTED = 1
+                                                    """ % (dp.todayStr('n'))
 
 
 
@@ -51,6 +66,8 @@ existsList = []
 print("[DEBUG] CRAWLING 시작")
 
 for eachRow in db.select(query):
+    print(eachRow)
+
     if(len(eachRow) > 0):
         print(eachRow[0],'/',eachRow[1])
 
@@ -58,7 +75,7 @@ for eachRow in db.select(query):
             get_stake_info(eachRow[0])
         except:
             print("error 발생!")
-        time.sleep(0.05)
+        time.sleep(0.5)
 print("[INFO] 종목명/종목코드를 메모리에 읽어왔습니다")
 
 # Main

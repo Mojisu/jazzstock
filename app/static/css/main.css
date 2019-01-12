@@ -65,7 +65,7 @@ h3 {
  * Display navigation links inline
  */
 .menu {
-  background-color: #eeeeee;
+  background-color: #c6c6c6;
   height: 30px;
   margin-top: 0;
   margin-bottom: 10px;
@@ -87,9 +87,9 @@ h3 {
 }
 
  th {
-  background-color: #98B5A3;
+  background-color: #333333;
   color: white;
-  width: 100px;
+  width: 200px;
 }
 
 tr:nth-child(even) {
@@ -123,3 +123,9 @@ input[type=button], input[type=submit], input[type=reset] {
     color: #999;
     text-decoration: border;
 }
+
+
+/*
+    table
+*/
+

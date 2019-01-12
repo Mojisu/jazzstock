@@ -53,7 +53,7 @@ if(len(sys.argv)>1):
 print("PASSED ARGV : ",dateA)
 
 
-db_readAll(dateA)
+db_readAll(20190112)
 
 itr = 0
 start = time.time()
@@ -73,20 +73,3 @@ for eachCode in codeDic.keys():
         itr += 1
         time.sleep(1.5)
 
-#
-# # itr = 0
-# for eachCode in codeDic.keys():
-#     itr += 1
-#
-#     try:
-#         inserted_data_size = am.api_getDayChart(apiObj, eachCode, 20181220)
-#         time.sleep(3)
-#         print("[INFO]:", itr, eachCode, codeDic[eachCode], inserted_data_size, "rows inserted")
-#         if (itr % 18 == 0):
-#             print("[INFO]: wait for 30 second")
-#             time.sleep(1)
-#
-#     except:
-#         print('error! :', eachCode)
-#         itr += 1
-#         time.sleep(1.5)

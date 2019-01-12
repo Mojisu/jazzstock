@@ -1,28 +1,79 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<table>
-    <tr>
-        <th>종목명</th>
-        <th>DATE</th>
-        <th>ADJRATIO</th>
-        <th>OPEN</th>
-        <th>HIGH</th>
-        <th>LOW</th>
-        <th>CLOSE</th>
-        <th>VOLUME</th>
-    </tr>
-    {% for value in sampledata.result %}
-    <tr>
-        <td>{{ value['STOCKNAME'] }}</td>
-        <td>{{ value['DATE'] }}</td>
-        <td>{{ value['ADJRATIO'] }}</td>
-        <td>{{ value['OPEN'] }}</td>
-        <td>{{ value['HIGH'] }}</td>
-        <td>{{ value['LOW'] }}</td>
-        <td>{{ value['CLOSE'] }}</td>
-        <td>{{ value['VOLUME'] }}</td>
-    </tr>
-    {% endfor %}
-</table>
+<script src="static/js/sorttable.js"></script>
+
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 95%;
+}
+
+td {
+  border: 1px solid #7c7c7c;
+  text-align: right;
+  padding: 5px;
+}
+
+th {
+  text-align: center;
+  padding: 8px;
+  background-color: #333333;
+
+}
+
+td:nth-child(1) {
+  text-align: center;
+  width: 80em;
+  min-width: 8em;
+  max-width: 80em;
+  word-break: break-all;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+    <table id="sndrank" class="sortable">
+        <tr>
+            <th>STOCKNAME</th>
+            <th>CLOSE</th>
+            <th>P1</th>
+            <th>P5</th>
+            <th>P20</th>
+            <th>I1</th>
+            <th>I5</th>
+            <th>I20</th>
+            <th>F1</th>
+            <th>F5</th>
+            <th>F20</th>
+            <th>Y1</th>
+            <th>Y5</th>
+            <th>Y20</th>
+        </tr>
+        {% for value in sampledata.result %}
+        <tr>
+            <td>
+                    <a href="{{ '/sndChart?stockcode='+ value['STOCKNAME']}}" >
+                        {{ value['STOCKNAME'] }}
+                    </a>
+            </td>
+            <td>{{ "{:,}".format(value['CLOSE']) }}</td>
+            <td>{{ "%.2f"|format(value['P1']*100) if value['P1'] != None else '-'}}</td>
+            <td>{{ "%.2f"|format(value['P5']*100) if value['P5'] != None else '-'}}</td>
+            <td>{{ "%.2f"|format(value['P20']*100) if value['P20'] != None else '-' }}</td>
+            <td>{{ "%.2f"|format(value['I1']*100) }}</td>
+            <td>{{ "%.2f"|format(value['I5']*100) }}</td>
+            <td>{{ "%.2f"|format(value['I20']*100) }}</td>
+            <td>{{ "%.2f"|format(value['F1']*100) }}</td>
+            <td>{{ "%.2f"|format(value['F5']*100) }}</td>
+            <td>{{ "%.2f"|format(value['F20']*100) }}</td>
+            <td>{{ "%.2f"|format(value['YG1']*100) }}</td>
+            <td>{{ "%.2f"|format(value['YG5']*100) }}</td>
+            <td>{{ "%.2f"|format(value['YG20']*100) }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
 {% endblock %}

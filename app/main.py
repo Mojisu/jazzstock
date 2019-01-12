@@ -10,14 +10,23 @@ def home():
 
 @app.route('/sndChart', methods=['GET', 'POST'])
 def sndChart():
-    return render_template('sndChart.html', sampledata=dao_sndChart.employees(request.form['StockID']))
+
+    print(request.method)
+
+    if(request.method == 'POST'):
+        requestedCode = request.form['stockcode']
+    else:
+        requestedCode = request.args.get('stockcode')
+
+
+    return render_template('sndChart.html', sampledata=dao_sndChart.employees(requestedCode))
 
 @app.route('/sampledb', methods=['GET', 'POST'])
 def sampledb():
     if request.method == 'POST':
-        return render_template('sampledb.html', sampledata=dao_sndChart.employees(request.form['StockID']))
+        return render_template('sampledb.html', sampledata=dao_sndChart.sndRank(request.form['stockcode']))
     else:
-        return render_template('sampledb.html', sampledata=dao_sndChart.employees(request.args.get['StockID']))
+        return render_template('sampledb.html', sampledata=dao_sndChart.sndRank(request.args.get['stockcode']))
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -73,7 +73,6 @@ def api_getSndDB(apiObj, stockCode, date):
     datelist = db.selectSingleColumn(query)
     data = []
 
-    # tempStr = tempStr + date + '\t' + price + '\t' + volume + '\t' + forSum + '\t' + insSum + '\t' + per + '\t' + finan + '\t' + samo + '\t' + yg + '\t' + tusin + '\t' + insur + '\t' + nation + '\t' + bank + '\t' + otherfinan + '\t' + othercorpor + '\t' + otherfor + '\n'
 
     for eachLine in readTempFile():
         if eachLine[0] not in datelist:
@@ -84,6 +83,7 @@ def api_getSndDB(apiObj, stockCode, date):
 
     db.insert(insertQuery)
     return len(data)
+
 
 
 # jazzdb.T_STOCK_SND_DAY

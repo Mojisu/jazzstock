@@ -25,6 +25,7 @@ var dates = new Array;
 var ins = new Array;
 var forei = new Array;
 var per = new Array;
+var yg = new Array;
 for(var i = 0; i <data.length; i++){
     data_array.push([data[i].OPEN, data[i].CLOSE, data[i].LOW, data[i].HIGH, data[i].VOLUME, data[i].DATE]);
     volumes.push(data[i].VOLUME);
@@ -32,6 +33,7 @@ for(var i = 0; i <data.length; i++){
     ins.push(data[i].INS);
     forei.push(data[i].FOREI);
     per.push(data[i].PER);
+    yg.push(data[i].YG)
 
 }
 
@@ -129,6 +131,15 @@ myChart.setOption({
             height: '100',
             show: true
         }
+
+
+        , {
+            left: '10%',
+            right: '8%',
+            top: '780',
+            height: '100',
+            show: true
+        }
         // Add graph Grid End
     ],
     xAxis: [
@@ -209,6 +220,22 @@ myChart.setOption({
             min: 'dataMin',
             max: 'dataMax'
         }
+
+        , {
+            name: 'YG',
+            type: 'category',
+            gridIndex: 5, // Index 를 맞춰줘야 함
+            data: dates,
+            scale: true,
+            boundaryGap : false,
+            axisLine: {onZero: true},
+            axisTick: {show: false},
+            splitLine: {show: false},
+            axisLabel: {show: false},
+            splitNumber: 20,
+            min: 'dataMin',
+            max: 'dataMax'
+        }
         // Add graph End x-Grid
     ],
     yAxis: [
@@ -256,13 +283,24 @@ myChart.setOption({
             axisTick: {show: false},
             splitLine: {show: false}
         }
+
+
+        , {
+            scale: true,
+            gridIndex: 5, // Index 를 맞춰줘야 함
+            splitNumber: 2,
+            axisLabel: {show: false},
+            axisLine: {show: false},
+            axisTick: {show: false},
+            splitLine: {show: false}
+        }
         // Add graph End y-Grid
     ],
     dataZoom: [
         {
             type: 'inside',
             // 그래프 추가 될 시 x-axis index 추가
-            xAxisIndex: [0, 1, 2, 3, 4],
+            xAxisIndex: [0, 1, 2, 3, 4, 5],
             start: 66,
             end: 100
         },
@@ -340,6 +378,9 @@ myChart.setOption({
         xAxisIndex: 2, // Index 를 맞춰줘야 함
         yAxisIndex: 2, // Index 를 맞춰줘야 함
         data: ins
+        lineStyle: {
+            color: '#cc2e2e'
+        }
     }
     , {
         name: 'FOREI',
@@ -347,6 +388,10 @@ myChart.setOption({
         xAxisIndex: 3, // Index 를 맞춰줘야 함
         yAxisIndex: 3, // Index 를 맞춰줘야 함
         data: forei
+        lineStyle: {
+            color: '#cc2e2e'
+        }
+
     }
     , {
         name: 'PER',
@@ -354,6 +399,20 @@ myChart.setOption({
         xAxisIndex: 4, // Index 를 맞춰줘야 함
         yAxisIndex: 4, // Index 를 맞춰줘야 함
         data: per
+        lineStyle: {
+            color: '#cc2e2e'
+        }
+    }
+
+    , {
+        name: 'YG',
+        type: 'bar',
+        xAxisIndex: 5, // Index 를 맞춰줘야 함
+        yAxisIndex: 5, // Index 를 맞춰줘야 함
+        data: yg
+        lineStyle: {
+            color: '#cc2e2e'
+        }
     }
 
     // Add graph End
