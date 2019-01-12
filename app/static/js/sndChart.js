@@ -26,6 +26,13 @@ var ins = new Array;
 var forei = new Array;
 var per = new Array;
 var yg = new Array;
+
+var samo = new Array;
+var tusin = new Array;
+
+var finan = new Array;
+var nation = new Array;
+
 for(var i = 0; i <data.length; i++){
     data_array.push([data[i].OPEN, data[i].CLOSE, data[i].LOW, data[i].HIGH, data[i].VOLUME, data[i].DATE]);
     volumes.push(data[i].VOLUME);
@@ -34,6 +41,12 @@ for(var i = 0; i <data.length; i++){
     forei.push(data[i].FOREI);
     per.push(data[i].PER);
     yg.push(data[i].YG)
+
+    samo.push(data[i].SAMO)
+    tusin.push(data[i].TUSIN)
+
+    finan.push(data[i].FINAN)
+    nation.push(data[i].NATION)
 
 }
 
@@ -140,6 +153,47 @@ myChart.setOption({
             height: '100',
             show: true
         }
+
+
+        , {
+            left: '10%',
+            right: '8%',
+            top: '880',
+            height: '100',
+            show: true
+        }
+
+
+        , {
+            left: '10%',
+            right: '8%',
+            top: '980',
+            height: '100',
+            show: true
+        }
+
+
+        , {
+            left: '10%',
+            right: '8%',
+            top: '1080',
+            height: '100',
+            show: true
+        }
+
+
+        , {
+            left: '10%',
+            right: '8%',
+            top: '1180',
+            height: '100',
+            show: true
+        }
+
+
+
+
+
         // Add graph Grid End
     ],
     xAxis: [
@@ -206,7 +260,7 @@ myChart.setOption({
         }
 
         , {
-            name: 'PER',
+            name: 'PERRRR',
             type: 'category',
             gridIndex: 4, // Index 를 맞춰줘야 함
             data: dates,
@@ -225,6 +279,70 @@ myChart.setOption({
             name: 'YG',
             type: 'category',
             gridIndex: 5, // Index 를 맞춰줘야 함
+            data: dates,
+            scale: true,
+            boundaryGap : false,
+            axisLine: {onZero: true},
+            axisTick: {show: false},
+            splitLine: {show: false},
+            axisLabel: {show: false},
+            splitNumber: 20,
+            min: 'dataMin',
+            max: 'dataMax'
+        }
+
+        , {
+            name: 'SAMO',
+            type: 'category',
+            gridIndex: 6, // Index 를 맞춰줘야 함
+            data: dates,
+            scale: true,
+            boundaryGap : false,
+            axisLine: {onZero: true},
+            axisTick: {show: false},
+            splitLine: {show: false},
+            axisLabel: {show: false},
+            splitNumber: 20,
+            min: 'dataMin',
+            max: 'dataMax'
+        }
+
+        , {
+            name: 'TUSIN',
+            type: 'category',
+            gridIndex: 7, // Index 를 맞춰줘야 함
+            data: dates,
+            scale: true,
+            boundaryGap : false,
+            axisLine: {onZero: true},
+            axisTick: {show: false},
+            splitLine: {show: false},
+            axisLabel: {show: false},
+            splitNumber: 20,
+            min: 'dataMin',
+            max: 'dataMax'
+        }
+
+        , {
+            name: 'FINAN',
+            type: 'category',
+            gridIndex: 8, // Index 를 맞춰줘야 함
+            data: dates,
+            scale: true,
+            boundaryGap : false,
+            axisLine: {onZero: true},
+            axisTick: {show: false},
+            splitLine: {show: false},
+            axisLabel: {show: false},
+            splitNumber: 20,
+            min: 'dataMin',
+            max: 'dataMax'
+        }
+
+        , {
+            name: 'NATION',
+            type: 'category',
+            gridIndex: 9, // Index 를 맞춰줘야 함
             data: dates,
             scale: true,
             boundaryGap : false,
@@ -294,13 +412,57 @@ myChart.setOption({
             axisTick: {show: false},
             splitLine: {show: false}
         }
+
+
+        , {
+            scale: true,
+            gridIndex: 6, // Index 를 맞춰줘야 함
+            splitNumber: 2,
+            axisLabel: {show: false},
+            axisLine: {show: false},
+            axisTick: {show: false},
+            splitLine: {show: false}
+        }
+
+
+        , {
+            scale: true,
+            gridIndex: 7, // Index 를 맞춰줘야 함
+            splitNumber: 2,
+            axisLabel: {show: false},
+            axisLine: {show: false},
+            axisTick: {show: false},
+            splitLine: {show: false}
+        }
+
+
+        , {
+            scale: true,
+            gridIndex: 8, // Index 를 맞춰줘야 함
+            splitNumber: 2,
+            axisLabel: {show: false},
+            axisLine: {show: false},
+            axisTick: {show: false},
+            splitLine: {show: false}
+        }
+
+
+        , {
+            scale: true,
+            gridIndex: 9, // Index 를 맞춰줘야 함
+            splitNumber: 2,
+            axisLabel: {show: false},
+            axisLine: {show: false},
+            axisTick: {show: false},
+            splitLine: {show: false}
+        }
         // Add graph End y-Grid
     ],
     dataZoom: [
         {
             type: 'inside',
             // 그래프 추가 될 시 x-axis index 추가
-            xAxisIndex: [0, 1, 2, 3, 4, 5],
+            xAxisIndex: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
             start: 66,
             end: 100
         },
@@ -377,7 +539,7 @@ myChart.setOption({
         type: 'bar',
         xAxisIndex: 2, // Index 를 맞춰줘야 함
         yAxisIndex: 2, // Index 를 맞춰줘야 함
-        data: ins
+        data: ins,
         lineStyle: {
             color: '#cc2e2e'
         }
@@ -387,7 +549,7 @@ myChart.setOption({
         type: 'bar',
         xAxisIndex: 3, // Index 를 맞춰줘야 함
         yAxisIndex: 3, // Index 를 맞춰줘야 함
-        data: forei
+        data: forei,
         lineStyle: {
             color: '#cc2e2e'
         }
@@ -398,7 +560,7 @@ myChart.setOption({
         type: 'bar',
         xAxisIndex: 4, // Index 를 맞춰줘야 함
         yAxisIndex: 4, // Index 를 맞춰줘야 함
-        data: per
+        data: per,
         lineStyle: {
             color: '#cc2e2e'
         }
@@ -409,7 +571,51 @@ myChart.setOption({
         type: 'bar',
         xAxisIndex: 5, // Index 를 맞춰줘야 함
         yAxisIndex: 5, // Index 를 맞춰줘야 함
-        data: yg
+        data: yg,
+        lineStyle: {
+            color: '#cc2e2e'
+        }
+    }
+
+    , {
+        name: 'SAMO',
+        type: 'bar',
+        xAxisIndex: 6, // Index 를 맞춰줘야 함
+        yAxisIndex: 6, // Index 를 맞춰줘야 함
+        data: samo,
+        lineStyle: {
+            color: '#cc2e2e'
+        }
+    }
+
+    , {
+        name: 'TUSIN',
+        type: 'bar',
+        xAxisIndex: 7, // Index 를 맞춰줘야 함
+        yAxisIndex: 7, // Index 를 맞춰줘야 함
+        data: tusin,
+        lineStyle: {
+            color: '#cc2e2e'
+        }
+    }
+
+    , {
+        name: 'FINAN',
+        type: 'bar',
+        xAxisIndex: 8, // Index 를 맞춰줘야 함
+        yAxisIndex: 8, // Index 를 맞춰줘야 함
+        data: finan,
+        lineStyle: {
+            color: '#cc2e2e'
+        }
+    }
+
+    , {
+        name: 'NATION',
+        type: 'bar',
+        xAxisIndex: 9, // Index 를 맞춰줘야 함
+        yAxisIndex: 9, // Index 를 맞춰줘야 함
+        data: nation,
         lineStyle: {
             color: '#cc2e2e'
         }

@@ -1,5 +1,6 @@
-#import pyodbc
+# import pyodbc
 import mysql.connector as mc
+
 
 class Database:
 
@@ -15,51 +16,50 @@ class Database:
                                , B.OPEN, B.HIGH, B.LOW, B.CLOSE
                                , C.VOLUME
                                , C.FOREI
-                               , C.INS, C.PER, C.YG, C.SAMO, C.TUSIN, C.FINAN, C.BANK, C.INSUR, C.OTHERCORPOR, C.OTHERFOR, C.OTHERFINAN
-                            
-                            
+                               , C.INS, C.PER, C.YG, C.SAMO, C.TUSIN, C.FINAN, C.BANK, C.NATION, C.INSUR, C.OTHERCORPOR, C.OTHERFOR, C.OTHERFINAN
+
+
                             FROM
                             (
                                SELECT A.STOCKNAME, A.STOCKCODE, DIX.DATE
                                FROM jazzdb.T_STOCK_CODE_MGMT A
-                            
+
                                JOIN (
-                            
+
                                  SELECT DATE   
                                   FROM jazzdb.T_DATE_INDEXED
                                  WHERE CNT BETWEEN 0 AND 299
-                            
+
                                ) DIX 
-                            
+
                                WHERE 1=1
                                AND (STOCKCODE = '%s' OR STOCKNAME = '%s')
                             ) A
-                            
-                            
+
+
                             JOIN (
                                SELECT STOCKCODE, DATE, OPEN, HIGH, LOW, CLOSE, ADJCLASS, ADJRATIO
                                FROM jazzdb.T_STOCK_OHLC_DAY
                             ) B ON (A.STOCKCODE = B.STOCKCODE AND A.DATE = B.DATE )
-                            
-                            
+
+
                             JOIN (
                                SELECT STOCKCODE, DATE, VOLUME
                                , FOREI, INS, PER, YG, SAMO, TUSIN, FINAN, BANK, INSUR, NATION, OTHERCORPOR, OTHERFOR, OTHERFINAN
                                FROM jazzdb.T_STOCK_SND_DAY
                             ) C ON (A.STOCKCODE = C.STOCKCODE AND A.DATE = C.DATE )
                             ;
-        ''' % (code,code)
+        ''' % (code, code)
         cursor.execute(query)
         rt = {'result':
-                    [dict(zip([column[0] for column in cursor.description], row))
-                     for row in cursor.fetchall()]}
+                  [dict(zip([column[0] for column in cursor.description], row))
+                   for row in cursor.fetchall()]}
 
         self.cnxn.close()
         return rt
 
 
 def employees(code=None):
-
     def db_query():
         db = Database()
         emps = db.list_employees(code)
@@ -70,9 +70,8 @@ def employees(code=None):
 
 
 def sndRank(date=None):
-
     query = '''
-    
+
         SELECT B.STOCKNAME, B.STOCKCODE, DATE, CLOSE, 
             P1, P3, P5, P20, P60, 
             I1, I3, I5, I20, I60, 
@@ -92,7 +91,7 @@ def sndRank(date=None):
         WHERE C.CNT = 0
         ORDER BY I1
         LIMIT 50
-    
+
     '''
     ip = '106.10.39.168'
     id = 'root'
