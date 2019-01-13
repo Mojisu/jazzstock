@@ -53,12 +53,14 @@ if(len(sys.argv)>1):
 print("PASSED ARGV : ",dateA)
 
 
-db_readAll(20190112)
+db_readAll(dateA)
+
 
 itr = 0
 start = time.time()
 for eachCode in codeDic.keys():
     itr += 1
+
 
     try:
         am.api_getSndDB(apiObj, eachCode, dateA)
@@ -72,4 +74,4 @@ for eachCode in codeDic.keys():
         print('error! :', eachCode)
         itr += 1
         time.sleep(1.5)
-
+#
