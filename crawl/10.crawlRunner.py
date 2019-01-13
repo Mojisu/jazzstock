@@ -11,7 +11,7 @@ import manager.dateManager as dm
 # process.kill()
 #
 # process = subprocess.Popen(["python", "02.naver.py"])
-# time.sleep(650)
+# time.sleep(1000)
 # process.kill()
 
 
@@ -39,7 +39,7 @@ for i in [0,1,2]:
 #     print(os.getcwd())
 #     print(i,os.getpid())
 #     # pid = subprocess.Popen(["python", "crawlSnd.py"]).pid
-#     process = subprocess.Popen(["python", "05.crawl_ohlc.py",'20190111'])
+#     process = subprocess.Popen(["python", "06.crawl_ohlc.py",'20190111'])
 #
 #     # 지금은 시간으로 대충 때려맞춰놨는데
 #     # 프로세스에서 리턴값 받으면 킬하는걸로 수정필요함.
