@@ -51,6 +51,9 @@ tr:nth-child(even) {
             <th>Y1</th>
             <th>Y5</th>
             <th>Y20</th>
+            <th>S1</th>
+            <th>S5</th>
+            <th>S20</th>
         </tr>
         {% for value in sampledata.result %}
         <tr>
@@ -72,6 +75,9 @@ tr:nth-child(even) {
             <td>{{ "%.2f"|format(value['YG1']*100) }}</td>
             <td>{{ "%.2f"|format(value['YG5']*100) }}</td>
             <td>{{ "%.2f"|format(value['YG20']*100) }}</td>
+            <td>{{ "%.2f"|format(value['S1']*100) }}</td>
+            <td>{{ "%.2f"|format(value['S5']*100) }}</td>
+            <td>{{ "%.2f"|format(value['S20']*100) }}</td>
         </tr>
         {% endfor %}
     </table>

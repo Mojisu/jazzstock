@@ -14,10 +14,13 @@ function menu_click(str){
     <title>JazzStock</title>
     <strong><link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"></strong>
   </head>
+
+
+
   <body>
     <form action="" method="post" class="form" name="menu_form">
     <header>
-          <input type="text" placeholder="종목" name="stockcode" value="{{ request.form.stockcode }}" style="margin-left: 30%; width: 20%;">
+          <input type="text" placeholder="종목명 / 종목코드" name="stockcode" value="{{ request.form.stockcode }}" style="margin-left: 30%; width: 20%;">
           <input type="submit" value="Search" class="search">
     </header>
     <strong><nav>

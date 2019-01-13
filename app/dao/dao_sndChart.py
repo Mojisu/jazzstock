@@ -88,9 +88,11 @@ def sndRank(date=None):
         FROM jazzdb.T_STOCK_SND_ANALYSIS_RESULT_TEMP A
         JOIN jazzdb.T_STOCK_CODE_MGMT B USING (STOCKCODE)
         JOIN jazzdb.T_DATE_INDEXED C USING (DATE)
-        WHERE C.CNT = 0
-        ORDER BY I1
-        LIMIT 50
+        WHERE 1=1
+        AND (I1>0 OR F1>0)
+        AND C.CNT = 0
+        ORDER BY I1 DESC
+        LIMIT 400
 
     '''
     ip = '106.10.39.168'
