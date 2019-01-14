@@ -16,14 +16,14 @@ def db_readAll(dt):
                         FROM jazzdb.T_STOCK_CODE_MGMT A
                         WHERE 1=1
                         AND A.STOCKCODE NOT IN (
-                        
+
                             SELECT STOCKCODE
                             FROM jazzdb.T_STOCK_SND_DAY
                             WHERE DATE = '%s'
                             GROUP BY STOCKCODE
                         )
                         AND A.LISTED = 1
-                                                        """ %(dt)
+                                                        """ % (dt)
 
     for eachRow in db.select(query):
         if (len(eachRow) > 0):
@@ -32,46 +32,36 @@ def db_readAll(dt):
 
     print("[INFO] 종목명/종목코드를 메모리에 읽어왔습니다, 남은 종목 수: ", len(itemDic.keys()))
 
-itemDic = {}
-codeDic = {}
+
+itemDic, codeDic = {},{}
 
 apiObj = kapi.Kiwoom()
 apiObj.comm_connect()
-
-# DateA : TODAY I
 dateA, dateB = am.api_checkDate(apiObj, dp.todayStr('n'))
 
-print(dp.todayStr('n'))
-print(dateA, dateB)
-
-
-
-# target_dt = dateA[:4] + '-' + dateA[4:6] + '-' + dateA[6:]
-if(len(sys.argv)>1):
+if (len(sys.argv) > 1):
     dateA = sys.argv[1]
-
-print("PASSED ARGV : ",dateA)
-
+    print("PASSED ARGV : ", dateA) # 과거 수집용
+else:
+    print("PASSED ARGV : None") # 일 배치
 
 db_readAll(dateA)
-
-
-itr = 0
 start = time.time()
-for eachCode in codeDic.keys():
-    itr += 1
 
+for i,eachCode in enumerate(list(codeDic.keys())[:min([len(codeDic),995])]):
 
     try:
         am.api_getSndDB(apiObj, eachCode, dateA)
         time.sleep(0.48)
-        print("[INFO]:", itr, eachCode, codeDic[eachCode], "inserted", time.time()-start)
-        if (itr % 18 == 0):
-            print("[INFO]: wait for 30 second")
-            time.sleep(1)
+
+        if (i !=0 and i % 40 == 0):
+            print("[INFO]:", i, eachCode, codeDic[eachCode], "inserted", time.time() - start)
+            #print("[INFO]: wait for 30 second")
+            time.sleep(2)
 
     except:
-        print('error! :', eachCode)
-        itr += 1
+        print('[INFO]: INSERT ERROR :', eachCode)
         time.sleep(1.5)
-#
+
+
+apiObj.destroy()
