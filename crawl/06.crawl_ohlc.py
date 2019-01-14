@@ -5,8 +5,6 @@ import manager.apiManager as am
 import time
 import sys
 
-print("argv ! ", sys.argv)
-
 
 def db_readAll(dt):
     # DB에서 [종목명,종목코드] 로 구성된 데이터셋을 받아옴.
@@ -35,38 +33,29 @@ def db_readAll(dt):
     print("[INFO] 종목명/종목코드를 메모리에 읽어왔습니다, 남은 종목 수: ", len(itemDic.keys()))
 
 
-itemDic = {}
-codeDic = {}
+itemDic, codeDic = {},{}
 
 apiObj = kapi.Kiwoom()
 apiObj.comm_connect()
-
-# DateA : TODAY I
 dateA, dateB = am.api_checkDate(apiObj, dp.todayStr('n'))
 
-print(dp.todayStr('n'))
-print(dateA, dateB)
-
-target_dt = dateA[:4] + '-' + dateA[4:6] + '-' + dateA[6:]
-if(len(sys.argv)>1):
+if (len(sys.argv) > 1):
     dateA = sys.argv[1]
+    print("PASSED ARGV : ", dateA) # 과거 수집용
+else:
+    print("PASSED ARGV : None") # 일 배치
 
-print("PASSED ARGV : ",dateA)
 db_readAll(dateA)
-
-
-
-itr = 0
 start = time.time()
-for eachCode in codeDic.keys():
-    itr += 1
+
+for itr,eachCode in enumerate(list(codeDic.keys())[:min([len(codeDic),995])]):
 
     try:
         inserted_data_size = am.api_getDayChart(apiObj, eachCode, dateA)
         time.sleep(0.42)
-        print("[INFO]:", itr, eachCode, codeDic[eachCode], inserted_data_size, "rows inserted", time.time()-start)
         if (itr % 18 == 0):
             print("[INFO]: wait for 30 second")
+            print("[INFO]:", itr, eachCode, codeDic[eachCode], inserted_data_size, "rows inserted", time.time() - start)
             time.sleep(1)
 
     except:
