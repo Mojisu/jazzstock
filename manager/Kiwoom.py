@@ -29,7 +29,7 @@ class Kiwoom(QAxWidget):
 
     def _create_kiwoom_instance(self):
         self.setControl("KHOPENAPI.KHOpenAPICtrl.1")
-        print("wow")
+
 
     def _set_signal_slots(self):
         self.OnEventConnect.connect(self._event_connect)
@@ -41,19 +41,16 @@ class Kiwoom(QAxWidget):
 
         self.disconnect()
         self._create_kiwoom_instance()
-        print('here')
+
 
         self.dynamicCall("CommConnect()")
         self.login_event_loop = QEventLoop()
         self.login_event_loop.exec_()
-        print('apiObj refreshed')
 
     def comm_connect(self):
         self.dynamicCall("CommConnect()")
         self.login_event_loop = QEventLoop()
-        print('flag1')
         self.login_event_loop.exec_()
-        print('flag2')
 
     def _event_connect(self, err_code):
         if err_code == 0:
