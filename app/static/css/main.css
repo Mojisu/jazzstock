@@ -85,6 +85,7 @@ h3 {
 .menu li a {
   color: #999;
   text-decoration: none;
+  font-size:16px;
 }
 
  th {
@@ -108,21 +109,28 @@ input[type=text] {
     margin: 10px 10px;
 }
 
+
+input[type=button], input[type=submit], input[type=reset] {
+    background-color: #c6c6c6;
+    border: none;
+      color: #999;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+}
+
 .search {
     background-color: #98B5A3;
-    border: none;
     color: white;
+    border: none;
     padding: 10px 20px;
     margin: 10px 10px;
     text-decoration: none;
     cursor: pointer;
-}
-
-input[type=button], input[type=submit], input[type=reset] {
-    background-color: #eeeeee;
-    border: none;
-    color: #999;
-    text-decoration: border;
+    font-size: 12px;
 }
 
 
