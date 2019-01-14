@@ -31,3 +31,4 @@ for eachcode in new_list:
         db.insert("UPDATE `jazzdb`.`T_STOCK_CODE_MGMT` SET `STOCKNAME` = '%s', `UPDATEDATE` = '%s' WHERE (`STOCKCODE` = '%s')" %(eachcode[1],dm.todayStr('-'),eachcode[0]))
 
 
+apiObj.destroy()
