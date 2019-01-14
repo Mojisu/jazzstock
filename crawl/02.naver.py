@@ -32,9 +32,7 @@ def get_stake_info(code):
 
         #데이터 db insert
         query = 'INSERT INTO jazzdb.T_STOCK_SHARES_INFO VALUES("%s","%s","%s","%s")' %(code,eachObj[0],eachObj[1],dp.todayStr('n'))
-        print(query)
         db.insert(query)
-    print("======================================")
 
 
 
@@ -75,7 +73,7 @@ for eachRow in db.select(query):
             get_stake_info(eachRow[0])
         except:
             print("error 발생!")
-        time.sleep(0.5)
+        time.sleep(0.2)
 print("[INFO] 종목명/종목코드를 메모리에 읽어왔습니다")
 
 # Main
