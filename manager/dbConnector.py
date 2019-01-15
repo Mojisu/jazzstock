@@ -1,9 +1,9 @@
 import mysql.connector as mc
 
-ip = '106.10.39.168'
-id = 'root'
-pw = 'coffee'
-dbScheme = 'jazzdb'
+ip = ''
+id = ''
+pw = ''
+dbScheme = ''
 
 def insert(query):
 
