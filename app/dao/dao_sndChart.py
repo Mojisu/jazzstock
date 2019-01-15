@@ -5,10 +5,10 @@ import mysql.connector as mc
 class Database:
 
     def list_employees(self, code):
-        ip = '106.10.39.168'
-        id = 'root'
-        pw = 'coffee'
-        dbScheme = 'jazzdb'
+        ip = ''
+        id = ''
+        pw = ''
+        dbScheme = ''
         self.cnxn = mc.connect(host=ip, database=dbScheme, user=id, password=pw)
         cursor = self.cnxn.cursor()
         query = '''
