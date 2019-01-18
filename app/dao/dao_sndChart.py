@@ -69,7 +69,48 @@ def employees(code=None):
     return res
 
 
-def sndRank(date=None):
+def sndRank(column, interval,order,by):
+
+
+    queryhead = '''
+    
+            SELECT B.STOCKNAME, DATE, CLOSE, 
+
+
+    '''
+
+    toselect = ['P','I','F']
+
+    for each in column:
+        toselect.append(each)
+
+
+    querycont = ''
+    for eachcolumn in toselect:
+        for eachinterval in interval:
+            querycont = querycont + str(eachcolumn)+str(eachinterval)+', '
+
+    print('[DEBUG]' , querycont[:-2])
+
+    querytail = '''
+    
+        FROM jazzdb.T_STOCK_SND_ANALYSIS_RESULT_TEMP A
+        JOIN jazzdb.T_STOCK_CODE_MGMT B USING (STOCKCODE)
+        JOIN jazzdb.T_DATE_INDEXED C USING (DATE)
+        WHERE 1=1
+        AND (I1>0 OR F1>0) 
+        AND C.CNT = 0
+        ORDER BY %s1 %s
+        LIMIT 200
+    
+    '''%(order[0],by[0])
+
+    fullquery = queryhead + querycont[:-2] + querytail
+    print('fq: \n ', fullquery)
+
+
+
+
     query = '''
 
         SELECT B.STOCKNAME, B.STOCKCODE, DATE, CLOSE, 
@@ -92,7 +133,7 @@ def sndRank(date=None):
         AND (I1>0 OR F1>0)
         AND C.CNT = 0
         ORDER BY I1 DESC
-        LIMIT 400
+        LIMIT 40
 
     '''
     ip = '106.10.39.168'
@@ -101,11 +142,16 @@ def sndRank(date=None):
     dbScheme = 'jazzdb'
     cnxn = mc.connect(host=ip, database=dbScheme, user=id, password=pw)
     cursor = cnxn.cursor()
-    cursor.execute(query)
+    cursor.execute(fullquery)
+
+
+
+    column = cursor.column_names
     rt = {'result':
-              [dict(zip([column[0] for column in cursor.description], row))
-               for row in cursor.fetchall()]}
+              [dict(zip([column[0] for column in cursor.description], row)) for row in cursor.fetchall()]}
+
+    dt =rt['result'][0]['DATE']
 
     cnxn.close()
 
-    return rt
+    return column, rt, dt

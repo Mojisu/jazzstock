@@ -135,6 +135,64 @@ input[type=button], input[type=submit], input[type=reset] {
 
 
 /*
+ A LINK
+*/
+
+/* unvisited link */
+a:link {
+  color: green;
+}
+
+/* visited link */
+a:visited {
+  color: red;
+}
+
+/* mouse over link */
+a:hover {
+  color: blue;
+}
+
+/* selected link */
+a:active {
+  color: hotpink;
+}
+
+/*
     table
 */
 
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 95%;
+}
+
+td {
+  border: 1px solid #7c7c7c;
+  text-align: right;
+  padding: 5px;
+}
+
+th {
+  text-align: center;
+  padding: 8px;
+  background-color: #333333;
+  color: white;
+}
+
+td:nth-child(1) {
+  text-align: center;
+  width: 80em;
+  min-width: 8em;
+  max-width: 80em;
+  word-break: break-all;
+}
+
+td.formatest {
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}

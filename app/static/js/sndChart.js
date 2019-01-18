@@ -67,11 +67,11 @@ myChart.setOption({
     animation: false,
     title: {
         left: 'center',
-        text: data[0].STOCKNAME
+        text: data[0].STOCKNAME + '('  + data[0].STOCKCODE + ')'
     },
     legend: {
         top: 80,
-        data: ['日K', 'MA5', 'MA10', 'MA20', 'MA30']
+        data: ['Candle', 'MA5', 'MA10', 'MA20', 'MA30']
     },
     tooltip: {
         trigger: 'axis',
@@ -82,6 +82,7 @@ myChart.setOption({
         borderWidth: 1,
         borderColor: '#ccc',
         padding: 10,
+        opacity: 0.1,
         textStyle: {
             color: '#000'
         },
@@ -93,7 +94,9 @@ myChart.setOption({
     },
     axisPointer: {
         link: {xAxisIndex: 'all'},
+
         label: {
+            show:false,
             backgroundColor: '#777'
         }
     },
@@ -228,6 +231,7 @@ myChart.setOption({
         }
         // Add graph Start x-Grid
         , {
+
             name: 'INS ',
             type: 'category',
             gridIndex: 2, // Index 를 맞춰줘야 함
@@ -478,7 +482,7 @@ myChart.setOption({
     series: [
      {
         type: 'candlestick',
-        name: '日K',
+        name: 'Candle',
         data: data_array,
         itemStyle: {
             normal: {
