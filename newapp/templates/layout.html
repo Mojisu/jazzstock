@@ -1,0 +1,32 @@
+<script language="javascript">
+function checkCheckbox(frm,obj,num) {
+  var str = obj.name;
+  var len = frm.length;
+
+  var chk = 0;
+  for(i=0; i<len; i++) {
+    if (frm[i].name == str && frm[i].checked == true) {
+      chk++;
+    }
+
+    if (chk > num) {
+      alert("You can only select a maximum of "+num+" checkboxes");
+      obj.checked = false;
+      break;
+    }
+  }
+}
+</script>
+
+<form name="form1">
+<input name="a[]" type="checkbox" value="aa" onClick="checkCheckbox(this.form,this,3)">aa
+<input name="a[]" type="checkbox" value="bb" onClick="checkCheckbox(this.form,this,3)">bb
+<input name="a[]" type="checkbox" value="cc" onClick="checkCheckbox(this.form,this,3)">cc
+<input name="a[]" type="checkbox" value="dd" onClick="checkCheckbox(this.form,this,3)">dd
+<input name="a[]" type="checkbox" value="ee" onClick="checkCheckbox(this.form,this,3)">ee
+<input name="a[]" type="checkbox" value="ff" onClick="checkCheckbox(this.form,this,3)">ff
+<input name="a[]" type="checkbox" value="gg" onClick="checkCheckbox(this.form,this,3)">gg
+<input name="a[]" type="checkbox" value="hh" onClick="checkCheckbox(this.form,this,3)">hh
+<input name="a[]" type="checkbox" value="ii" onClick="checkCheckbox(this.form,this,3)">ii
+<br/><br/>
+</form>

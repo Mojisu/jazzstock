@@ -1,14 +1,14 @@
 # import pyodbc
 import mysql.connector as mc
-
+import constant as cs
 
 class Database:
 
     def list_employees(self, code):
-        ip = '106.10.39.168'
-        id = 'root'
-        pw = 'coffee'
-        dbScheme = 'jazzdb'
+        ip = cs.ip
+        id = cs.id
+        pw = cs.pw
+        dbScheme = cs.dbScheme
         self.cnxn = mc.connect(host=ip, database=dbScheme, user=id, password=pw)
         cursor = self.cnxn.cursor()
         query = '''
@@ -136,10 +136,10 @@ def sndRank(column, interval,order,by):
         LIMIT 40
 
     '''
-    ip = '106.10.39.168'
-    id = 'root'
-    pw = 'coffee'
-    dbScheme = 'jazzdb'
+    ip = cs.ip
+    id = cs.id
+    pw = cs.pw
+    dbScheme = cs.dbScheme
     cnxn = mc.connect(host=ip, database=dbScheme, user=id, password=pw)
     cursor = cnxn.cursor()
     cursor.execute(fullquery)

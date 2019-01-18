@@ -21,11 +21,11 @@ SELECT RS.STOCKCODE, RS.DATE, RS.CLOSE
     ,ROUND(I60/SHARE,5) AS I60
     
     
-    ,ROUND(F1/SHARE,5) AS I1
-    ,ROUND(F3/SHARE,5) AS I3
-    ,ROUND(F5/SHARE,5) AS I5
-    ,ROUND(F20/SHARE,5) AS I20
-    ,ROUND(F60/SHARE,5) AS I60
+    ,ROUND(F1/SHARE,5) AS F1
+    ,ROUND(F3/SHARE,5) AS F3
+    ,ROUND(F5/SHARE,5) AS F5
+    ,ROUND(F20/SHARE,5) AS F20
+    ,ROUND(F60/SHARE,5) AS F60
     
     
     ,ROUND(PS1/SHARE,5) AS PS1
@@ -65,17 +65,18 @@ SELECT RS.STOCKCODE, RS.DATE, RS.CLOSE
     ,ROUND(IS20/SHARE,5) AS IS20
     ,ROUND(IS60/SHARE,5) AS IS60
 	
+	,ROUND(NT1/SHARE,5)  AS NT1
+    ,ROUND(NT3/SHARE,5)  AS NT3
+    ,ROUND(NT5/SHARE,5)  AS NT5
+    ,ROUND(NT20/SHARE,5) AS NT20
+    ,ROUND(NT60/SHARE,5) AS NT60
+	
 	,ROUND(BK1/SHARE,5)  AS BK1
     ,ROUND(BK3/SHARE,5)  AS BK3
     ,ROUND(BK5/SHARE,5)  AS BK5
     ,ROUND(BK20/SHARE,5) AS BK20
     ,ROUND(BK60/SHARE,5) AS BK60
 	
-	,ROUND(NT1/SHARE,5)  AS NT1
-    ,ROUND(NT3/SHARE,5)  AS NT3
-    ,ROUND(NT5/SHARE,5)  AS NT5
-    ,ROUND(NT20/SHARE,5) AS NT20
-    ,ROUND(NT60/SHARE,5) AS NT60
 	
 	,ROUND(OC1/SHARE,5)  AS OC1
     ,ROUND(OC3/SHARE,5)  AS OC3
@@ -197,13 +198,13 @@ FROM
 
 	WHERE 1=1
 	AND A.STOCKCODE = '%s'
-	AND B.CNT < 70
+	AND B.CNT < 80
 ) RS
 
-WHERE RS.DATE = '%s'
+WHERE RS.DATE > '2018-12-31'
 ;
 
-''' %(stockcode,date)
+''' %(stockcode)
     db.insert(query)
 
 
@@ -246,9 +247,8 @@ todaydate = dt.now().date()
 db_readAll(dt.now().date())
 for i,eachCode in enumerate(codeDic.keys()):
 
-    # analysisSndBasicEachDay(eachCode, date)
     try:
-        analysisSndBasicEachDay(eachCode,todaydate)
+        analysisSndBasicEachDay(eachCode,'2018-12-31')
         if(i%400==0):
             print(i,todaydate,eachCode,dt.now()-start)
     except:
