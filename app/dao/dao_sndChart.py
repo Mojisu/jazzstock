@@ -106,7 +106,7 @@ def sndRank(column, interval,order,by):
     '''%(order[0],by[0])
 
     fullquery = queryhead + querycont[:-2] + querytail
-    print('fq: \n ', fullquery)
+    #print('fq: \n ', fullquery)
 
 
 

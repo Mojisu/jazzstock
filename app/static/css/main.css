@@ -5,6 +5,10 @@ body {
   color: #444;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 /*
  * Create dark grey header with a white logo
  */
@@ -46,6 +50,8 @@ div.jumbo {
           border-radius: 6px;
 }
 
+
+
 h2 {
   font-size: 3em;
   margin-top: 40px;
@@ -65,28 +71,41 @@ h3 {
 /*
  * Display navigation links inline
  */
-.menu {
-  background-color: #c6c6c6;
-  height: 30px;
-  margin-top: 0;
-  margin-bottom: 10px;
-  padding-top: 10px;
-  padding-left: 30%;
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
 }
 
-.menu li {
-  display: inline;
+li {
+  float: left;
+  width: 50%;
 }
 
-.menu li + li {
-  margin-left: 20%
-}
-
-.menu li a {
-  color: #999;
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 30px;
   text-decoration: none;
-  font-size:16px;
+  font-weight: bold;
 }
+
+li a:hover {
+  background-color: #111;
+}
+
+.active {
+  background-color: #4CAF50;
+}
+
+
+/*---------------------------------------------------*/
 
  th {
   background-color: #333333;
@@ -111,9 +130,10 @@ input[type=text] {
 
 
 input[type=button], input[type=submit], input[type=reset] {
-    background-color: #c6c6c6;
-    border: none;
-      color: #999;
+
+      background-color: #4CAF50; /* Green */
+      border: none;
+      color: white;
       text-align: center;
       text-decoration: none;
       display: inline-block;
@@ -139,22 +159,22 @@ input[type=button], input[type=submit], input[type=reset] {
 */
 
 /* unvisited link */
-a:link {
+.firstcol >a:link {
   color: green;
 }
 
 /* visited link */
-a:visited {
+.firstcol >a:visited {
   color: red;
 }
 
 /* mouse over link */
-a:hover {
+.firstcol >a:hover {
   color: blue;
 }
 
 /* selected link */
-a:active {
+.firstcol >a:active {
   color: hotpink;
 }
 

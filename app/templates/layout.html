@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 
-
 <html>
   <head>
     <title>JazzStock</title>
@@ -23,17 +22,16 @@
   <body>
     <form action="/sndChart" method="get" class="form" name="menu_form">
     <header>
-          <input type="text" placeholder="종목명 / 종목코드" name="stockcode" value="{{ request.form.stockcode }}" style="margin-left: 30%; width: 37%;">
+          <input type="text" placeholder="종목명 / 종목코드" name="stockcode" value="{{ request.form.stockcode }}" style="width: 90%;">
           <input type="submit" value="Search" class="search">
     </header>
     </form>
-    <strong><nav>
     <ul class="menu">
-      <li><a href="{{ url_for('home') }}">Home</a></li>
-      <li><a href="/sndRankRelative">Page1</a></li>
-      <li><a href="/sndRankIndependence">Page2</a></li>
+      <li><a href="/sndRankRelative">SndRANK</a></li>
+      <li><a href="/sndRankIndependence">TEMP</a></li>
     </ul>
-    </nav></strong>
+    <br>
+    <br>
     <div class="container">
       {% block content %}
       {% endblock %}

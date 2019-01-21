@@ -98,7 +98,7 @@ var currentDate = date.toISOString().slice(0,10);
         <tr>
             {% for eachcol in column %}
                 {% if eachcol =='STOCKNAME'  %}
-                    <td>
+                    <td class="firstcol">
                             <a href="{{ '/sndChart?stockcode='+ value['STOCKNAME']}}" >
                                 {{ value[eachcol] }}
                             </a>
