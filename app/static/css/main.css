@@ -38,7 +38,8 @@ header h1.logo:hover {
  * Center the body content
  */
 .container {
-  width: 940px;
+
+  align:center;
   margin: 0 auto;
 }
 
@@ -71,7 +72,7 @@ h3 {
 /*
  * Display navigation links inline
  */
-ul {
+ul{
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -118,7 +119,6 @@ tr:nth-child(even) {
 }
 
 .sndChart {
-    width: 1000px;
     height: 1800px;
 }
 
@@ -210,8 +210,7 @@ td:nth-child(1) {
   word-break: break-all;
 }
 
-td.formatest {
-}
+
 
 tr:nth-child(even) {
   background-color: #dddddd;
