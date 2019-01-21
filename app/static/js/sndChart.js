@@ -19,6 +19,10 @@ function calculateMA(dayCount, data) {
     return result;
 }
 
+
+
+
+
 var data_array = new Array;
 var volumes = new Array;
 var dates = new Array;

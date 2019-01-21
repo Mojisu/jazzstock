@@ -8,7 +8,7 @@ application = Flask(__name__)
 def home():
     return render_template('home.html')
 
-@application.route('/sndChart', methods=['GET', 'POST'])
+@application.route('/sndChart', methods=['GET'])
 def sndChart():
 
     print(request.method)
@@ -21,8 +21,9 @@ def sndChart():
 
     return render_template('sndChart.html', sampledata=dao_sndChart.employees(requestedCode))
 
-@application.route('/sampledb', methods=['GET', 'POST'])
-def sampledb():
+@application.route('/sndRankRelative', methods=['GET','POST'])
+def sndRankRelative():
+
     if request.method == 'POST':
 
         print("[DEBUG] FORM VALUE IN DICTIONARY :" , dict(request.form))
@@ -54,13 +55,22 @@ def sampledb():
         print('[DEBUG] rq by : ',request_by)
 
         column, table, dt = dao_sndChart.sndRank(request_window,request_interval,request_order,request_by)
+        return render_template('sndRankRelative.html', sampledata=table, column=column, date = dt)
 
-        print(column)
-        print(table)
-        print(dt)
 
-        return render_template('sampledb.html', sampledata=table, column=column, date = dt)
 
+    else:
+        request_window = ['YG', 'S']
+        request_by = ['DESC']
+        request_order = ['I']
+        request_interval = ['1', '5', '20']
+        column, table, dt = dao_sndChart.sndRank(request_window, request_interval, request_order, request_by)
+        return render_template('sndRankRelative.html', sampledata=table, column=column, date = dt)
+
+
+@application.route('/sndRankIndependence')
+def sndRankIndependence():
+    return render_template('sndRankIndependence.html')
 
 if __name__ == '__main__':
     application.run(debug=True)

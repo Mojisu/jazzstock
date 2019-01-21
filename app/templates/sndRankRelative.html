@@ -1,0 +1,124 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<script src="static/js/sorttable.js"></script>
+<script language="javascript">
+function checkCheckbox(frm,obj,num) {
+  var str = obj.name;
+  var len = frm.length;
+
+  var chk = 0;
+  for(i=0; i<len; i++) {
+    if (frm[i].name == str && frm[i].checked == true) {
+      chk++;
+    }
+
+    if (chk > num) {
+      alert("You can only select a maximum of "+num+" checkboxes");
+      obj.checked = false;
+      break;
+    }
+  }
+}
+
+var currentDate = date.toISOString().slice(0,10);
+
+</script>
+
+
+
+<div class="selection">
+     <form method="post" name="form_name" id="form_name">
+
+
+        WINDOW :
+        <input type="checkbox" name="window" autocomplete="off" value="S" checked="checked" onClick="checkCheckbox(this.form,this,2)"> 사모펀드
+        <input type="checkbox" name="window" value="YG" autocomplete="off" checked="checked" onClick="checkCheckbox(this.form,this,2)"> 연기금
+        <input type="checkbox" name="window" value="T"  autocomplete="off"  onClick="checkCheckbox(this.form,this,2)"> 투신
+        <input type="checkbox" name="window" value="FN" autocomplete="off" onClick="checkCheckbox(this.form,this,2)"> 금융
+         <input type="checkbox" name="window" value="IS" autocomplete="off" onClick="checkCheckbox(this.form,this,2)"> 보험
+         <input type="checkbox" name="window" value="NT" autocomplete="off" onClick="checkCheckbox(this.form,this,2)"> 국가
+         <input type="checkbox" name="window" value="BK" autocomplete="off" onClick="checkCheckbox(this.form,this,2)"> 은행
+         <input type="checkbox" name="window" value="OC" autocomplete="off" onClick="checkCheckbox(this.form,this,2)"> 기타법인
+         <input type="checkbox" name="window" value="PS" autocomplete="off" onClick="checkCheckbox(this.form,this,2)"> 개인
+
+        <br>
+
+
+        INTERVAL :
+
+         <input type="checkbox" name="interval" value="1" autocomplete="off" checked="checked" onClick="checkCheckbox(this.form,this,3)"> 1
+        <input type="checkbox" name="interval" value="3"  autocomplete="off" checked="checked" onClick="checkCheckbox(this.form,this,3)"> 3
+        <input type="checkbox" name="interval" value="5" autocomplete="off" onClick="checkCheckbox(this.form,this,3)"> 5
+        <input type="checkbox" name="interval" value="20" autocomplete="off" checked="checked" onClick="checkCheckbox(this.form,this,3)"> 20
+        <input type="checkbox" name="interval" value="60" autocomplete="off" onClick="checkCheckbox(this.form,this,3)"> 60<br>
+
+        ORDER BY :
+
+
+         <select name="order">
+          <option value="S">사모펀드</option>
+          <option value="YG">연기금</option>
+          <option value="TS">투신</option>
+          <option value="FN">금융</option>
+          <option value="IS">보험</option>
+          <option value="NT">국가</option>
+          <option value="BK">은행</option>
+          <option value="OC">기타법인</option>
+          <option value="PS">개인</option>
+        </select>
+
+         <select name="by">
+          <option value="DESC">내림차순</option>
+          <option value="ASC">오름차순</option>
+
+        </select> 선택옵션기준 200 종목만 DISPLAY 됩니다.
+
+<br>
+        DATE (NOT YET) :
+
+        <input type="date" name='date' min="2019-01-01" value="{{date}}">
+        <input type="submit" value="검색">
+    </form>
+</div>
+
+    <table id="sndrank" class="sortable">
+        <tr>
+
+            {% for eachcol in column %}
+                {% if eachcol !='DATE'  %}
+                    <th>{{eachcol}}</th>
+                {% endif %}
+            {% endfor %}
+        </tr>
+
+        {% for value in sampledata.result %}
+
+
+        <tr>
+            {% for eachcol in column %}
+                {% if eachcol =='STOCKNAME'  %}
+                    <td>
+                            <a href="{{ '/sndChart?stockcode='+ value['STOCKNAME']}}" >
+                                {{ value[eachcol] }}
+                            </a>
+                    </td>
+
+                    {% elif eachcol[0]=='P' and eachcol[2]=='S'%}
+                    <td>{{ "%.2f"|format(value[eachcol]*100) if value[eachcol] != None else '-'}}</td>
+                    {% elif eachcol=='CLOSE' %}
+                    <td>{{ "{:,}".format(value[eachcol]) }}</td>
+                    {% elif eachcol!='DATE' %}
+                    <td class="formatest">{{ "%.2f"|format(value[eachcol]*100) if value[eachcol] != None else '-'}}</td>
+
+
+                {% endif %}
+            {% endfor %}
+        </tr>
+        {% endfor %}
+
+
+
+    </table>
+</div>
+{% endblock %}
