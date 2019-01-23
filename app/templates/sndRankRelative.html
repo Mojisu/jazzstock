@@ -104,12 +104,48 @@ var currentDate = date.toISOString().slice(0,10);
                             </a>
                     </td>
 
-                    {% elif eachcol[0]=='P' and eachcol[2]=='S'%}
-                    <td>{{ "%.2f"|format(value[eachcol]*100) if value[eachcol] != None else '-'}}</td>
-                    {% elif eachcol=='CLOSE' %}
-                    <td>{{ "{:,}".format(value[eachcol]) }}</td>
-                    {% elif eachcol!='DATE' %}
-                    <td class="formatest">{{ "%.2f"|format(value[eachcol]*100) if value[eachcol] != None else '-'}}</td>
+                {% elif eachcol=='CLOSE' %}
+                    <td class="money">{{ "{:,}".format(value[eachcol]) }}</td>
+
+                {% elif eachcol!='DATE' %}
+
+
+                    {% if value[eachcol] != None and value[eachcol]>=0.25 %}
+                    <td class="profita" style="background-color: #f72525;">
+                    {% elif value[eachcol] != None and value[eachcol]>=0.15 %}
+                    <td class="profitb" style="background-color: #ff6247;">
+                    {% elif value[eachcol] != None and value[eachcol]>=0.1 %}
+                    <td class="profitc" style="background-color: #ff8d7a;">
+                    {% elif value[eachcol] != None and value[eachcol]>=0.05 %}
+                    <td class="profitd" style="background-color: #ffab9e">
+
+                    {% elif value[eachcol] != None and value[eachcol]>=0.03 %}
+                    <td class="profite" style="background-color: #ffe2dd;">
+                    {% elif value[eachcol] != None and value[eachcol]>=0.02 %}
+                    <td class="profite" style="background-color: #ffefed;">
+                    {% elif value[eachcol] != None and value[eachcol]>=0.01 %}
+                    <td class="profite" style="background-color: #fff5f4;">
+
+                    {% elif value[eachcol] != None and value[eachcol]>=-0.01 %}
+                    <td class="profite" style="background-color: #ffffff;">
+
+                    {% elif value[eachcol] != None and value[eachcol]>=-0.02 %}
+                    <td class="profite" style="background-color: #e5f0ff;">
+                    {% elif value[eachcol] != None and value[eachcol]>=-0.03 %}
+                    <td class="profite" style="background-color: #c2dafc;">
+                    {% elif value[eachcol] != None and value[eachcol]>=-0.05 %}
+                    <td class="profite" style="background-color: #a0c7ff;">
+
+                    {% elif value[eachcol] != None and value[eachcol]>=-0.1 %}
+                    <td class="profite" style="background-color: #75aeff;">
+                    {% elif value[eachcol] != None and value[eachcol]>=-0.15 %}
+                    <td class="profite" style="background-color: #5199ff;">
+                    {% elif value[eachcol] != None and value[eachcol]<-0.25 %}
+                    <td class="profite" style="background-color: #247bf7;">
+
+
+                    {% endif %}
+                    {{ "%.2f"|format(value[eachcol]*100) if value[eachcol] != None else '-'}}</td>
 
 
                 {% endif %}
