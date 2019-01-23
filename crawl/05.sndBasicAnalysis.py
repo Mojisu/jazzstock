@@ -19,8 +19,7 @@ SELECT RS.STOCKCODE, RS.DATE, RS.CLOSE
     ,ROUND(I5/SHARE,5) AS I5
     ,ROUND(I20/SHARE,5) AS I20
     ,ROUND(I60/SHARE,5) AS I60
-    
-    
+
     ,ROUND(F1/SHARE,5) AS F1
     ,ROUND(F3/SHARE,5) AS F3
     ,ROUND(F5/SHARE,5) AS F5
@@ -34,19 +33,18 @@ SELECT RS.STOCKCODE, RS.DATE, RS.CLOSE
     ,ROUND(PS20/SHARE,5) AS PS20
     ,ROUND(PS60/SHARE,5) AS PS60
     
-    
     ,ROUND(FN1/SHARE,5)  AS FN1
     ,ROUND(FN3/SHARE,5)  AS FN3
     ,ROUND(FN5/SHARE,5)  AS FN5
     ,ROUND(FN20/SHARE,5) AS FN20
     ,ROUND(FN60/SHARE,5) AS FN60
-	
+    
 	,ROUND(YG1/SHARE,5) AS  YG1
     ,ROUND(YG3/SHARE,5) AS  YG3
     ,ROUND(YG5/SHARE,5) AS  YG5
     ,ROUND(YG20/SHARE,5) AS YG20
     ,ROUND(YG60/SHARE,5) AS YG60
-	
+
 	,ROUND(S1/SHARE,5)  AS S1
     ,ROUND(S3/SHARE,5)  AS S3
     ,ROUND(S5/SHARE,5)  AS S5
@@ -64,25 +62,33 @@ SELECT RS.STOCKCODE, RS.DATE, RS.CLOSE
     ,ROUND(IS5/SHARE,5)  AS IS5
     ,ROUND(IS20/SHARE,5) AS IS20
     ,ROUND(IS60/SHARE,5) AS IS60
-	
+    
 	,ROUND(NT1/SHARE,5)  AS NT1
     ,ROUND(NT3/SHARE,5)  AS NT3
     ,ROUND(NT5/SHARE,5)  AS NT5
     ,ROUND(NT20/SHARE,5) AS NT20
     ,ROUND(NT60/SHARE,5) AS NT60
-	
+    
 	,ROUND(BK1/SHARE,5)  AS BK1
     ,ROUND(BK3/SHARE,5)  AS BK3
     ,ROUND(BK5/SHARE,5)  AS BK5
     ,ROUND(BK20/SHARE,5) AS BK20
     ,ROUND(BK60/SHARE,5) AS BK60
 	
-	
 	,ROUND(OC1/SHARE,5)  AS OC1
     ,ROUND(OC3/SHARE,5)  AS OC3
     ,ROUND(OC5/SHARE,5)  AS OC5
     ,ROUND(OC20/SHARE,5) AS OC20
     ,ROUND(OC60/SHARE,5) AS OC60
+
+	,IR ,FR ,PR
+    ,FNR,YR,SR
+	,TR
+    ,ISR
+    ,NTR
+    ,BKR
+    ,OCR
+
 FROM
 
 (
@@ -176,7 +182,17 @@ FROM
 		, SUM(A.OTHERCORPOR) OVER (PARTITION BY A.STOCKCODE ORDER BY DATE ASC ROWS BETWEEN 19 PRECEDING AND CURRENT ROW) AS OC20
 		, SUM(A.OTHERCORPOR) OVER (PARTITION BY A.STOCKCODE ORDER BY DATE ASC ROWS BETWEEN 59 PRECEDING AND CURRENT ROW) AS OC60
 
-
+	, ROW_NUMBER() OVER (PARTITION BY STOCKCODE ORDER BY A.INS DESC) AS IR 
+    , ROW_NUMBER() OVER (PARTITION BY STOCKCODE ORDER BY A.FOREI DESC) FR
+    , ROW_NUMBER() OVER (PARTITION BY STOCKCODE ORDER BY A.PER DESC) PR
+    , ROW_NUMBER() OVER (PARTITION BY STOCKCODE ORDER BY A.FINAN DESC) FNR
+    , ROW_NUMBER() OVER (PARTITION BY STOCKCODE ORDER BY A.SAMO DESC) SR
+    , ROW_NUMBER() OVER (PARTITION BY STOCKCODE ORDER BY A.YG DESC) YR
+    , ROW_NUMBER() OVER (PARTITION BY STOCKCODE ORDER BY A.TUSIN DESC) TR
+    , ROW_NUMBER() OVER (PARTITION BY STOCKCODE ORDER BY A.INSUR DESC) ISR
+    , ROW_NUMBER() OVER (PARTITION BY STOCKCODE ORDER BY A.NATION DESC) NTR
+    , ROW_NUMBER() OVER (PARTITION BY STOCKCODE ORDER BY A.BANK DESC) BKR
+    , ROW_NUMBER() OVER (PARTITION BY STOCKCODE ORDER BY A.OTHERCORPOR DESC) OCR
 
 	FROM jazzdb.T_STOCK_SND_DAY A
 	JOIN jazzdb.T_DATE_INDEXED B USING (DATE)
@@ -198,13 +214,14 @@ FROM
 
 	WHERE 1=1
 	AND A.STOCKCODE = '%s'
-	AND B.CNT < 80
+	AND B.CNT < 300
 ) RS
 
-WHERE RS.DATE > '2018-12-31'
+WHERE RS.DATE = '%s'
+
 ;
 
-''' %(stockcode)
+''' %(stockcode,date)
     db.insert(query)
 
 
@@ -244,30 +261,15 @@ codeDic = {}
 
 start = dt.now()
 todaydate = dt.now().date()
+todaydate = '2019-01-22'
+
 db_readAll(dt.now().date())
 for i,eachCode in enumerate(codeDic.keys()):
 
     try:
-        analysisSndBasicEachDay(eachCode,'2018-12-31')
+        analysisSndBasicEachDay(eachCode,todaydate)
         if(i%400==0):
             print(i,todaydate,eachCode,dt.now()-start)
     except:
         print('error',todaydate,eachCode,)
 
-
-
-#
-# start = dt.now()
-# for eachday in ['02','03','04','07','08','09','10']:
-#
-#     dtt = '2019-01-' + eachday
-#     db_readAll(dtt)
-#     for i,eachCode in enumerate(codeDic.keys()):
-#
-#         # analysisSndBasicEachDay(eachCode, date)
-#         try:
-#             analysisSndBasicEachDay(eachCode,dtt)
-#             if(i%400==0):
-#                 print(i,dtt,eachCode,dt.now()-start)
-#         except:
-#             print('error',dtt,eachCode,)
