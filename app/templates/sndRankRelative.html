@@ -140,8 +140,11 @@ var currentDate = date.toISOString().slice(0,10);
                     <td class="profite" style="background-color: #75aeff;">
                     {% elif value[eachcol] != None and value[eachcol]>=-0.15 %}
                     <td class="profite" style="background-color: #5199ff;">
-                    {% elif value[eachcol] != None and value[eachcol]<-0.25 %}
+                    {% elif value[eachcol] != None and value[eachcol]>=-0.25 %}
                     <td class="profite" style="background-color: #247bf7;">
+                    {% elif value[eachcol] != None and value[eachcol]<-0.25 %}
+                    <td class="profite" style="background-color: #104693;">
+
 
 
                     {% endif %}
