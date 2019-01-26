@@ -101,7 +101,7 @@ def sndRank(column, interval,order,by):
         AND (I1>0 OR F1>0) 
         AND C.CNT = 0
         ORDER BY %s1 %s
-        LIMIT 200
+        LIMIT 100
     
     '''%(order[0],by[0])
 
