@@ -69,7 +69,7 @@ def employees(code=None):
     return res
 
 
-def sndRank(column, interval,order,by):
+def sndRank(column, interval, order, by):
 
 
     queryhead = '''
@@ -106,7 +106,7 @@ def sndRank(column, interval,order,by):
     '''%(order[0],by[0])
 
     fullquery = queryhead + querycont[:-2] + querytail
-    #print('fq: \n ', fullquery)
+    print('fq: \n ', fullquery)
 
 
 
@@ -126,8 +126,69 @@ def sndRank(column, interval,order,by):
 
 
 
-    # dt =rt['result'][0]['DATE']
-    dt = '2019-12-12'
+    dt =rt['result'][0]['DATE']
+    # dt = '2019-12-12'
+
+    cnxn.close()
+
+    return column, rt, dt
+
+
+def sndIndependent(order, by):
+
+    column = ['FR', 'IR', 'YR', 'SR', 'TR', 'FNR', 'ISR', 'NTR', 'BKR', 'OCR']
+    interval = [1,5]
+    queryhead = '''
+
+            SELECT B.STOCKNAME, DATE, CLOSE, 
+
+
+    '''
+
+    toselect = ['P', 'F', 'I']
+
+
+
+    querycont = ''
+    for eachcolumn in toselect:
+        for eachinterval in interval:
+            querycont = querycont + str(eachcolumn) + str(eachinterval) + ', '
+
+    for each in column:
+        querycont = querycont + str(each) + ', '
+
+    print('[DEBUG]', querycont[:-2])
+
+    querytail = '''
+
+        FROM jazzdb.T_STOCK_SND_ANALYSIS_RESULT_TEMP A
+        JOIN jazzdb.T_STOCK_CODE_MGMT B USING (STOCKCODE)
+        JOIN jazzdb.T_DATE_INDEXED C USING (DATE)
+        WHERE 1=1
+        AND (I1>0 OR F1>0) 
+        AND C.CNT = 0
+        ORDER BY %sR %s
+        LIMIT 100
+
+    ''' % (order[0], by[0])
+
+    fullquery = queryhead + querycont[:-2] + querytail
+    print('fq: \n ', fullquery)
+
+    ip = cs.ip
+    id = cs.id
+    pw = cs.pw
+    dbScheme = cs.dbScheme
+    cnxn = mc.connect(host=ip, database=dbScheme, user=id, password=pw)
+    cursor = cnxn.cursor()
+    cursor.execute(fullquery)
+
+    column = cursor.column_names
+    rt = {'result':
+              [dict(zip([column[0] for column in cursor.description], row)) for row in cursor.fetchall()]}
+
+    dt = rt['result'][0]['DATE']
+    # dt = '2019-12-12'
 
     cnxn.close()
 

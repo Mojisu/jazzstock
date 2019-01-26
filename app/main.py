@@ -68,9 +68,43 @@ def sndRankRelative():
         return render_template('sndRankRelative.html', sampledata=table, column=column, date = dt)
 
 
-@application.route('/sndRankIndependence')
+@application.route('/sndRankIndependence', methods=['GET','POST'])
 def sndRankIndependence():
-    return render_template('sndRankIndependence.html')
+    print("haha", print(request.method))
+    if request.method == 'POST':
+
+
+        print('yy')
+        print("[DEBUG] FORM VALUE IN DICTIONARY :" , dict(request.form))
+
+
+
+        if ('order' in dict(request.form)):
+            request_order = dict(request.form)['order']
+        else:
+            request_order = ['I']
+
+        if ('by' in dict(request.form)):
+            request_by = dict(request.form)['by']
+        else:
+            request_by = ['DESC']
+
+        print('[DEBUG] rq order : ',request_order)
+        print('[DEBUG] rq by : ',request_by)
+
+        column, table, dt = dao_sndChart.sndIndependent(request_order, request_by)
+        return render_template('sndRankIndependence.html', sampledata=table, column=column, date = dt)
+
+
+
+    else:
+
+        print('xx')
+        request_by = ['ASC']
+        request_order = ['I']
+        column, table, dt = dao_sndChart.sndIndependent(request_order, request_by)
+        return render_template('sndRankIndependence.html', sampledata=table, column=column, date = dt)
+
 
 if __name__ == '__main__':
     application.run(debug=True)
