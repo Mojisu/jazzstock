@@ -139,6 +139,7 @@ myChart.setOption({
         data: ['Candle', 'MA5', 'MA20', 'MA60', 'MA120']
     },
     tooltip: {
+
         trigger: 'axis',
         axisPointer: {
             type: 'cross'
@@ -192,7 +193,7 @@ myChart.setOption({
         , {
             left: '10%',
             right: '8%',
-            top: '480',
+            top: '500',
             height: '100',
             show: true
         }
@@ -200,7 +201,7 @@ myChart.setOption({
         , {
             left: '10%',
             right: '8%',
-            top: '580',
+            top: '620',
             height: '100',
             show: true
         }
@@ -208,16 +209,7 @@ myChart.setOption({
         , {
             left: '10%',
             right: '8%',
-            top: '680',
-            height: '100',
-            show: true
-        }
-
-
-        , {
-            left: '10%',
-            right: '8%',
-            top: '780',
+            top: '740',
             height: '100',
             show: true
         }
@@ -226,7 +218,7 @@ myChart.setOption({
         , {
             left: '10%',
             right: '8%',
-            top: '880',
+            top: '860',
             height: '100',
             show: true
         }
@@ -244,7 +236,7 @@ myChart.setOption({
         , {
             left: '10%',
             right: '8%',
-            top: '1080',
+            top: '1100',
             height: '100',
             show: true
         }
@@ -253,7 +245,16 @@ myChart.setOption({
         , {
             left: '10%',
             right: '8%',
-            top: '1180',
+            top: '1220',
+            height: '100',
+            show: true
+        }
+
+
+        , {
+            left: '10%',
+            right: '8%',
+            top: '1340',
             height: '100',
             show: true
         }
@@ -442,11 +443,16 @@ myChart.setOption({
             splitArea: {
                 show: true
             }
+
         }, {
             scale: true,
+            position: 'right',
             gridIndex: 1,
             splitNumber: 2,
-            axisLabel: {show: false},
+            axisLabel: {
+                show: true,
+                fontSize: 10,
+            },
             axisLine: {show: false},
             axisTick: {show: false},
             splitLine: {show: false}
@@ -454,9 +460,13 @@ myChart.setOption({
         // Add graph Start y-Grid
         , {
             scale: true,
+            position: 'right',
             gridIndex: 2, // Index 를 맞춰줘야 함
             splitNumber: 2,
-            axisLabel: {show: false},
+            axisLabel: {
+                show: true,
+                fontSize: 10,
+            },
             axisLine: {show: false},
             axisTick: {show: false},
             splitLine: {show: false}
@@ -464,9 +474,13 @@ myChart.setOption({
 
         , {
             scale: true,
+            position: 'right',
             gridIndex: 3, // Index 를 맞춰줘야 함
             splitNumber: 2,
-            axisLabel: {show: false},
+            axisLabel: {
+                show: true,
+                fontSize: 10,
+            },
             axisLine: {show: false},
             axisTick: {show: false},
             splitLine: {show: false}
@@ -474,9 +488,13 @@ myChart.setOption({
 
         , {
             scale: true,
+            position: 'right',
             gridIndex: 4, // Index 를 맞춰줘야 함
             splitNumber: 2,
-            axisLabel: {show: false},
+            axisLabel: {
+                show: true,
+                fontSize: 10,
+            },
             axisLine: {show: false},
             axisTick: {show: false},
             splitLine: {show: false}
@@ -485,9 +503,13 @@ myChart.setOption({
 
         , {
             scale: true,
+            position: 'right',
             gridIndex: 5, // Index 를 맞춰줘야 함
             splitNumber: 2,
-            axisLabel: {show: false},
+            axisLabel: {
+                show: true,
+                fontSize: 10,
+            },
             axisLine: {show: false},
             axisTick: {show: false},
             splitLine: {show: false}
@@ -496,9 +518,13 @@ myChart.setOption({
 
         , {
             scale: true,
+            position: 'right',
             gridIndex: 6, // Index 를 맞춰줘야 함
             splitNumber: 2,
-            axisLabel: {show: false},
+            axisLabel: {
+                show: true,
+                fontSize: 10,
+            },
             axisLine: {show: false},
             axisTick: {show: false},
             splitLine: {show: false}
@@ -507,9 +533,13 @@ myChart.setOption({
 
         , {
             scale: true,
+            position: 'right',
             gridIndex: 7, // Index 를 맞춰줘야 함
             splitNumber: 2,
-            axisLabel: {show: false},
+            axisLabel: {
+                show: true,
+                fontSize: 10,
+            },
             axisLine: {show: false},
             axisTick: {show: false},
             splitLine: {show: false}
@@ -518,9 +548,13 @@ myChart.setOption({
 
         , {
             scale: true,
+            position: 'right',
             gridIndex: 8, // Index 를 맞춰줘야 함
             splitNumber: 2,
-            axisLabel: {show: false},
+            axisLabel: {
+                show: true,
+                fontSize: 10,
+            },
             axisLine: {show: false},
             axisTick: {show: false},
             splitLine: {show: false}
@@ -528,10 +562,15 @@ myChart.setOption({
 
 
         , {
+
             scale: true,
+            position: 'right',
             gridIndex: 9, // Index 를 맞춰줘야 함
             splitNumber: 2,
-            axisLabel: {show: false},
+            axisLabel: {
+                show: true,
+                fontSize: 10,
+            },
             axisLine: {show: false},
             axisTick: {show: false},
             splitLine: {show: false}
