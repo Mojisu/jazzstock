@@ -23,13 +23,34 @@ function calculateMA(dayCount, data) {
 function calculateCumSum(data) {
     var result = [];
     var now = 0
-    console.log(data)
     for (var i = 0, len = data.length; i < len; i++) {
 
         now = now + data[i]
         result.push(now);
     }
     return result;
+}
+
+function separatePlusMinus(data) {
+    var plus = [];
+    var minus = [];
+
+    for (var i = 0, len = data.length; i < len; i++) {
+
+
+        if (data[i]>0) {
+            plus.push(data[i])
+            minus.push(0)
+        }
+        else{
+            minus.push(data[i])
+            plus.push(0)
+        }
+    }
+    return {
+        plus:plus,
+        minus:minus
+   };
 }
 
 
@@ -82,6 +103,15 @@ var financumsum = calculateCumSum(finan)
 
 var nationcumsum = calculateCumSum(nation)
 
+
+ins = separatePlusMinus(ins)
+forei = separatePlusMinus(forei)
+per = separatePlusMinus(per)
+yg = separatePlusMinus(yg)
+samo = separatePlusMinus(samo)
+tusin = separatePlusMinus(tusin)
+finan = separatePlusMinus(finan)
+nation = separatePlusMinus(nation)
 
 
 var dataMA5 = calculateMA(5, data_array);
@@ -594,11 +624,22 @@ myChart.setOption({
         type: 'bar',
         xAxisIndex: 2, // Index 를 맞춰줘야 함
         yAxisIndex: 2, // Index 를 맞춰줘야 함
-        data: ins,
-        lineStyle: {
-            color: '#cc2e2e'
+        data: ins.plus,
+        itemStyle: {
+            color: downColor
         }
+    }
 
+
+    , {
+        name: '기관',
+        type: 'bar',
+        xAxisIndex: 2, // Index 를 맞춰줘야 함
+        yAxisIndex: 2, // Index 를 맞춰줘야 함
+        data: ins.minus,
+        itemStyle: {
+            color: upColor
+        }
     }
     , {
         type: 'line',
@@ -614,17 +655,27 @@ myChart.setOption({
 
 
 
+    , {
+        name: '외인',
+        type: 'bar',
+        xAxisIndex: 3, // Index 를 맞춰줘야 함
+        yAxisIndex: 3, // Index 를 맞춰줘야 함
+        data: forei.plus,
+        itemStyle: {
+            color: downColor
+        }
+    }
+
 
     , {
         name: '외인',
         type: 'bar',
         xAxisIndex: 3, // Index 를 맞춰줘야 함
         yAxisIndex: 3, // Index 를 맞춰줘야 함
-        data: forei,
-        lineStyle: {
-            color: '#cc2e2e'
+        data: forei.minus,
+        itemStyle: {
+            color: upColor
         }
-
     }
         , {
         type: 'line',
@@ -641,9 +692,21 @@ myChart.setOption({
         type: 'bar',
         xAxisIndex: 4, // Index 를 맞춰줘야 함
         yAxisIndex: 4, // Index 를 맞춰줘야 함
-        data: per,
-        lineStyle: {
-            color: '#cc2e2e'
+        data: per.plus,
+        itemStyle: {
+            color: downColor
+        }
+    }
+
+
+    , {
+        name: '개인',
+        type: 'bar',
+        xAxisIndex: 4, // Index 를 맞춰줘야 함
+        yAxisIndex: 4, // Index 를 맞춰줘야 함
+        data: per.minus,
+        itemStyle: {
+            color: upColor
         }
     }
     , {
@@ -662,9 +725,21 @@ myChart.setOption({
         type: 'bar',
         xAxisIndex: 5, // Index 를 맞춰줘야 함
         yAxisIndex: 5, // Index 를 맞춰줘야 함
-        data: yg,
-        lineStyle: {
-            color: '#cc2e2e'
+        data: yg.plus,
+        itemStyle: {
+            color: downColor
+        }
+    }
+
+
+    , {
+        name: '연기금',
+        type: 'bar',
+        xAxisIndex: 5, // Index 를 맞춰줘야 함
+        yAxisIndex: 5, // Index 를 맞춰줘야 함
+        data: yg.minus,
+        itemStyle: {
+            color: upColor
         }
     }
 
@@ -684,9 +759,21 @@ myChart.setOption({
         type: 'bar',
         xAxisIndex: 6, // Index 를 맞춰줘야 함
         yAxisIndex: 6, // Index 를 맞춰줘야 함
-        data: samo,
-        lineStyle: {
-            color: '#cc2e2e'
+        data: samo.plus,
+        itemStyle: {
+            color: downColor
+        }
+    }
+
+
+    , {
+        name: '사모펀드',
+        type: 'bar',
+        xAxisIndex: 6, // Index 를 맞춰줘야 함
+        yAxisIndex: 6, // Index 를 맞춰줘야 함
+        data: samo.minus,
+        itemStyle: {
+            color: upColor
         }
     }
 
@@ -706,9 +793,21 @@ myChart.setOption({
         type: 'bar',
         xAxisIndex: 7, // Index 를 맞춰줘야 함
         yAxisIndex: 7, // Index 를 맞춰줘야 함
-        data: tusin,
-        lineStyle: {
-            color: '#cc2e2e'
+        data: yg.plus,
+        itemStyle: {
+            color: downColor
+        }
+    }
+
+
+    , {
+        name: '투신',
+        type: 'bar',
+        xAxisIndex: 7, // Index 를 맞춰줘야 함
+        yAxisIndex: 7, // Index 를 맞춰줘야 함
+        data: yg.minus,
+        itemStyle: {
+            color: upColor
         }
     }
 
@@ -728,9 +827,21 @@ myChart.setOption({
         type: 'bar',
         xAxisIndex: 8, // Index 를 맞춰줘야 함
         yAxisIndex: 8, // Index 를 맞춰줘야 함
-        data: finan,
-        lineStyle: {
-            color: '#cc2e2e'
+        data: finan.plus,
+        itemStyle: {
+            color: downColor
+        }
+    }
+
+
+    , {
+        name: '금융',
+        type: 'bar',
+        xAxisIndex: 8, // Index 를 맞춰줘야 함
+        yAxisIndex: 8, // Index 를 맞춰줘야 함
+        data: finan.minus,
+        itemStyle: {
+            color: upColor
         }
     }
 
@@ -750,9 +861,21 @@ myChart.setOption({
         type: 'bar',
         xAxisIndex: 9, // Index 를 맞춰줘야 함
         yAxisIndex: 9, // Index 를 맞춰줘야 함
-        data: nation,
-        lineStyle: {
-            color: '#cc2e2e'
+        data: yg.plus,
+        itemStyle: {
+            color: downColor
+        }
+    }
+
+
+    , {
+        name: '국가',
+        type: 'bar',
+        xAxisIndex: 9, // Index 를 맞춰줘야 함
+        yAxisIndex: 9, // Index 를 맞춰줘야 함
+        data: yg.minus,
+        itemStyle: {
+            color: upColor
         }
     }
 
