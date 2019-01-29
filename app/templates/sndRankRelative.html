@@ -21,12 +21,77 @@ function checkCheckbox(frm,obj,num) {
   }
 }
 
-var currentDate = date.toISOString().slice(0,10);
+
+function setStorage(){
+    alert("here")
+    var q_window = [];
+    var q_interval = [];
+    var window = document.getElementsByName("window");
+    for (var i = 0; i < window.length; i++){
+
+        if(window[i].type =='checkbox' && window[i].checked == true)
+        {
+            q_window.push(window[i].value)
+        }
+    }
+
+
+    var interval = document.getElementsByName("interval");
+    for (var i = 0; i < interval.length; i++){
+
+        if(interval[i].type =='checkbox' && interval[i].checked == true)
+        {
+            q_interval.push(interval[i].value)
+        }
+    }
+    localStorage.setItem("checked_window",q_window);
+    localStorage.setItem("checked_interval",q_interval);
+
+}
+
+function onload(){
+
+    console.log("debug",localStorage)
+    if(localStorage.getItem("checked_window")!=null){
+    var q_window = localStorage.getItem("checked_window").split(',')
+    }
+    else q_window = ['S','YG']
+
+    if(localStorage.getItem("checked_interval")!=null){
+    var q_interval = localStorage.getItem("checked_interval").split(',')
+    }
+    else q_interval = ['1','5','20']
+
+
+    var window = document.getElementsByName("window");
+    for (var i = 0; i < window.length; i++)
+    {
+
+
+        if(window[i].type =='checkbox' && q_window.includes(window[i].value)){
+            window[i].checked=true
+            console.log("checkcheck",window[i].value)
+        }
+    }
+
+    var interval = document.getElementsByName("interval");
+    for (var i = 0; i < interval.length; i++)
+    {
+
+        if(interval[i].type =='checkbox' && q_interval.includes(interval[i].value)){
+            interval[i].checked=true
+            console.log("checkcheck",interval[i].value)
+        }
+    }
+
+
+}
+
 
 </script>
 
 
-
+<body onload="onload()">
 <div class="selection">
      <form method="post" name="form_name" id="form_name">
 
@@ -35,8 +100,8 @@ var currentDate = date.toISOString().slice(0,10);
                 WINDOW :
             </div>
             <div class="col-75">
-                <input type="checkbox" name="window" autocomplete="off" value="S" checked="checked" onClick="checkCheckbox(this.form,this,2)"> 사모펀드
-                <input type="checkbox" name="window" value="YG" autocomplete="off" checked="checked" onClick="checkCheckbox(this.form,this,2)"> 연기금
+                <input type="checkbox" name="window" value="S" autocomplete="off" onClick="checkCheckbox(this.form,this,2)"> 사모펀드
+                <input type="checkbox" name="window" value="YG" autocomplete="off" onClick="checkCheckbox(this.form,this,2)"> 연기금
                 <input type="checkbox" name="window" value="T"  autocomplete="off"  onClick="checkCheckbox(this.form,this,2)"> 투신
                 <input type="checkbox" name="window" value="FN" autocomplete="off" onClick="checkCheckbox(this.form,this,2)"> 금융
                  <input type="checkbox" name="window" value="IS" autocomplete="off" onClick="checkCheckbox(this.form,this,2)"> 보험
@@ -52,10 +117,10 @@ var currentDate = date.toISOString().slice(0,10);
                 INTERVAL :
             </div>
             <div class="col-75">
-                <input type="checkbox" name="interval" value="1" autocomplete="off" checked="checked" onClick="checkCheckbox(this.form,this,3)"> 1
-                <input type="checkbox" name="interval" value="3"  autocomplete="off" checked="checked" onClick="checkCheckbox(this.form,this,3)"> 3
+                <input type="checkbox" name="interval" value="1" autocomplete="off"  onClick="checkCheckbox(this.form,this,3)"> 1
+                <input type="checkbox" name="interval" value="3"  autocomplete="off" onClick="checkCheckbox(this.form,this,3)"> 3
                 <input type="checkbox" name="interval" value="5" autocomplete="off" onClick="checkCheckbox(this.form,this,3)"> 5
-                <input type="checkbox" name="interval" value="20" autocomplete="off" checked="checked" onClick="checkCheckbox(this.form,this,3)"> 20
+                <input type="checkbox" name="interval" value="20" autocomplete="off" onClick="checkCheckbox(this.form,this,3)"> 20
                 <input type="checkbox" name="interval" value="60" autocomplete="off" onClick="checkCheckbox(this.form,this,3)"> 60<br>
             </div>
         </div>
@@ -68,9 +133,11 @@ var currentDate = date.toISOString().slice(0,10);
 
 
                  <select name="order">
+                  <option value="I">기관</option>
+                  <option value="F">외인</option>
                   <option value="S">사모펀드</option>
                   <option value="YG">연기금</option>
-                  <option value="TS">투신</option>
+                  <option value="T">투신</option>
                   <option value="FN">금융</option>
                   <option value="IS">보험</option>
                   <option value="NT">국가</option>
@@ -94,7 +161,7 @@ var currentDate = date.toISOString().slice(0,10);
             </div>
             <div class="col-75">
                 <input type="date" name='date' min="2019-01-01" value="{{date}}">
-                <input type="submit" value="검색">
+                <input type="submit" value="검색" onclick="setStorage()">
             </div>
         </div>
     </form>
@@ -178,4 +245,5 @@ var currentDate = date.toISOString().slice(0,10);
 
     </table>
 </div>
+</body>
 {% endblock %}
