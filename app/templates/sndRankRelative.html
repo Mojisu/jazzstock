@@ -23,7 +23,6 @@ function checkCheckbox(frm,obj,num) {
 
 
 function setStorage(){
-    alert("here")
     var q_window = [];
     var q_interval = [];
     var window = document.getElementsByName("window");
@@ -51,7 +50,6 @@ function setStorage(){
 
 function onload(){
 
-    console.log("debug",localStorage)
     if(localStorage.getItem("checked_window")!=null){
     var q_window = localStorage.getItem("checked_window").split(',')
     }
@@ -70,7 +68,6 @@ function onload(){
 
         if(window[i].type =='checkbox' && q_window.includes(window[i].value)){
             window[i].checked=true
-            console.log("checkcheck",window[i].value)
         }
     }
 
@@ -80,7 +77,6 @@ function onload(){
 
         if(interval[i].type =='checkbox' && q_interval.includes(interval[i].value)){
             interval[i].checked=true
-            console.log("checkcheck",interval[i].value)
         }
     }
 
