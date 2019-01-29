@@ -832,7 +832,7 @@ myChart.setOption({
         type: 'bar',
         xAxisIndex: 7, // Index 를 맞춰줘야 함
         yAxisIndex: 7, // Index 를 맞춰줘야 함
-        data: yg.plus,
+        data: tusin.plus,
         itemStyle: {
             color: downColor
         }
@@ -844,7 +844,7 @@ myChart.setOption({
         type: 'bar',
         xAxisIndex: 7, // Index 를 맞춰줘야 함
         yAxisIndex: 7, // Index 를 맞춰줘야 함
-        data: yg.minus,
+        data: tusin.minus,
         itemStyle: {
             color: upColor
         }
@@ -900,7 +900,7 @@ myChart.setOption({
         type: 'bar',
         xAxisIndex: 9, // Index 를 맞춰줘야 함
         yAxisIndex: 9, // Index 를 맞춰줘야 함
-        data: yg.plus,
+        data: nation.plus,
         itemStyle: {
             color: downColor
         }
@@ -912,7 +912,7 @@ myChart.setOption({
         type: 'bar',
         xAxisIndex: 9, // Index 를 맞춰줘야 함
         yAxisIndex: 9, // Index 를 맞춰줘야 함
-        data: yg.minus,
+        data: nation.minus,
         itemStyle: {
             color: upColor
         }
