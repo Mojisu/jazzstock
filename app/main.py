@@ -12,6 +12,7 @@ def home():
 @application.route('/sndChart', methods=['GET'])
 def sndChart():
 
+    krx = 0
     if(request.method == 'POST'):
         requestedCode = request.form['stockcode']
     else:
@@ -22,23 +23,21 @@ def sndChart():
     infoData = dao.stockinfo(requestedCode)
     chartData = dao.sndChart(requestedCode)
 
-    print(infoData)
-    print('\n')
-    print(chartData['result'][-1])
-    recentRowFromDB=copy.deepcopy(chartData['result'][-1])
-
 
     # 최신데이터가 없으면 차트데이터에 가격만 붙여주는 작업
-    if(infoData['DATE']!=recentRowFromDB['DATE']):
-        toChange = infoData.keys()
+    recentRowFromDB=copy.deepcopy(chartData['result'][-1])
 
-
+    # 최신데이터가 없으면 차트데이터에 가격만 붙여주는 작업
+    if(infoData != None and infoData['DATE']!=recentRowFromDB['DATE']):
         for each in recentRowFromDB.keys():
             if(each in infoData.keys()):
                 recentRowFromDB[each] = infoData[each]
                 print(each,recentRowFromDB[each])
             elif(each not in ['STOCKNAME','STOCKCODE','ADJRATIO']):
                 recentRowFromDB[each] = 0
+    else:
+        infoData=chartData['result'][-1]
+    print(chartData['result'].append(recentRowFromDB))
 
     return render_template('sndChart.html', stockinfo=infoData, sampledata=chartData)
 
