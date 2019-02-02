@@ -4,8 +4,18 @@
 <div class="jumbo">
 
 
-    {{ stockinfo }}
-    {{ stockinfo['open'] }}
+    {% if stockinfo  %}
+
+    시가 {{ stockinfo['OPEN'] }}<br>
+    고가 {{ stockinfo['HIGH'] }}<br>
+    저가 {{ stockinfo['LOW'] }}<br>
+    현재가(종가) {{ stockinfo['CLOSE'] }}<br>
+    시간
+
+    {% else %}
+
+    KRX API에 해당종목이 검색되지 않아, 실시간 가격을 제공하지 않습니다, 원인파악후 수정하겠습니다<br>
+    {% endif %}
 
 </div>
 <div id="chart" class="sndChart"></div>
