@@ -1,6 +1,13 @@
 {% extends "layout.html" %}
-  
 {% block content %}
+
+<div class="jumbo">
+
+
+    {{ stockinfo }}
+    {{ stockinfo['open'] }}
+
+</div>
 <div id="chart" class="sndChart"></div>
 <script type="text/javascript" src="static/js/echarts.min.js"></script>
 <script type="text/javascript" src="static/js/sndChart.js"></script>
