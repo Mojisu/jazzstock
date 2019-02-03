@@ -118,7 +118,6 @@ def api_getSndForWin(apiObj, stockCode, date, winCode):
                      VALUES ''' + str(data)[1:-1]
 
 
-    print(insertQuery)
     db.insert(insertQuery)
     return len(data)
 

@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block content %}
+<script>
+
+    function onload(){
+        alert("해당 종목 데이터가 없습니다.")
+        window.location.href = "/";
+    }
+</script>
+
+
+<body onload="onload()">
+{% endblock %}

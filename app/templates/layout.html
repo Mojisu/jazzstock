@@ -22,7 +22,9 @@
   <body>
     <form action="/sndChart" method="get" class="form" name="menu_form">
     <header>
-          <input type="text" placeholder="종목명 / 종목코드" name="stockcode" value="{{ request.form.stockcode }}" style="width: 98%; ">
+          <div class="textSearch">
+          <input type="text" placeholder="종목명 / 종목코드" name="stockcode" value="{{ request.form.stockcode }}">
+          </div>
     </header>
     </form>
     <ul class="menu">

@@ -193,16 +193,14 @@ class Database:
 
         return column, rt, dt
 
+    # 입력값이 DB에 존재하는지 확인하는 메소드
+    def nameCodeValidation(self,stockcode):
 
-    def stockinfo(self,stockcode):
-
-
-        print(stockcode)
         self.getConn()
         cursor = self.cnxn.cursor()
         query = '''
 
-                               SELECT A.STOCKCODE
+                               SELECT A.STOCKNAME, A.STOCKCODE
                                FROM jazzdb.T_STOCK_CODE_MGMT A
                                WHERE 1=1
                                AND (STOCKCODE = '%s' OR STOCKNAME = '%s')
@@ -210,11 +208,21 @@ class Database:
                             ;
         ''' % (stockcode,stockcode)
         cursor.execute(query)
+        dbrs = cursor.fetchall()
+        if (len(dbrs)) > 0:
+            rs = [True,dbrs[0]]
+        else:
+            rs = [False,None]
 
-        code =  cursor.fetchall()[0][0]
-        print(code)
         self.closeConn()
-        url = 'http://asp1.krx.co.kr/servlet/krx.asp.XMLSise?code=%s' %(code)
+        return rs
+
+
+
+    def stockinfo(self,stockcode):
+
+        print('[DEBUG] STOCKINFO METHOD LAUNCHED', stockcode)
+        url = 'http://asp1.krx.co.kr/servlet/krx.asp.XMLSise?code=%s' %(stockcode)
         xml = et.fromstring(requests.get(url).content.strip())
         # keys = ['day_Date','day_Start','day_High','day_Low','day_EndPrice','day_Volume','day_getAmount']
         keys = ['day_Date', 'day_Start', 'day_High', 'day_Low', 'day_EndPrice', 'day_Volume']
@@ -243,12 +251,12 @@ class Database:
 
                     rtlist.append(eachrow)
 
+        print('[DEBUG] STOCKINFO METHOD RETURN VALUE', rtlist)
+        print('[DEBUG] STOCKINFO METHOD FINISHED', stockcode)
 
         if(len(rtlist)>0):
             return rtlist[0]
         else:
             return None
 
-    if __name__ == '__main__':
 
-        stockinfo('079940')

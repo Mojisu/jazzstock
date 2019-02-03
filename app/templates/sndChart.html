@@ -1,27 +1,38 @@
 {% extends "layout.html" %}
 {% block content %}
 
+{% if stockinfo != None and sampledata != None  %}
 <div class="jumbo">
 
 
-    {% if stockinfo  %}
+    시가 : {{ stockinfo['OPEN'] }}<br>
+    고가 : {{ stockinfo['HIGH'] }}<br>
+    저가 : {{ stockinfo['LOW'] }}<br>
+    현재가(종가) : {{ stockinfo['CLOSE'] }}<br>
+    가격차트 업데이트 시각 :<br>
+    수급차트 업데이트 시각 :
 
-    시가 {{ stockinfo['OPEN'] }}<br>
-    고가 {{ stockinfo['HIGH'] }}<br>
-    저가 {{ stockinfo['LOW'] }}<br>
-    현재가(종가) {{ stockinfo['CLOSE'] }}<br>
-    시간
 
-    {% else %}
-
-    KRX API에 해당종목이 검색되지 않아, 실시간 가격을 제공하지 않습니다, 원인파악후 수정하겠습니다<br>
-    {% endif %}
 
 </div>
 <div id="chart" class="sndChart"></div>
+
 <script type="text/javascript" src="static/js/echarts.min.js"></script>
 <script type="text/javascript" src="static/js/sndChart.js"></script>
 <script>
 window.onload = search({{ sampledata.result|tojson }});
 </script>
+
+
+{% else %}
+<script language="javascript">
+function noSuchStock() {
+    alert("해당 종목 데이터가 없습니다.");
+    return;
+}
+</script>
+<body onload="noSuchStock()">
+
+{% endif %}
+
 {% endblock %}

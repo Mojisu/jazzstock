@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from dao import dao_sndChart
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for, flash
 import copy
 
 application = Flask(__name__)
@@ -12,34 +12,42 @@ def home():
 @application.route('/sndChart', methods=['GET'])
 def sndChart():
 
-    krx = 0
-    if(request.method == 'POST'):
-        requestedCode = request.form['stockcode']
-    else:
-        requestedCode = request.args.get('stockcode')
-
+    requestedCode = request.args.get('stockcode')
 
     dao = dao_sndChart.Database()
-    infoData = dao.stockinfo(requestedCode)
-    chartData = dao.sndChart(requestedCode)
+    rs = dao.nameCodeValidation(requestedCode)
+
+    chartData = None
+    infoData = None
+
+    # rs[0] => 종목명이 존재하면
+    if (rs[0]):
+        chartData = dao.sndChart(requestedCode)
+        infoData = dao.stockinfo(rs[1][1])
+
+        recentRowFromDB=copy.deepcopy(chartData['result'][-1])
+
+        # 최신데이터가 없으면 차트데이터에 가격만 붙여주는 작업
+        print('[DEBUG] ',rs[1])
+        print('[DEBUG] MAIN.PY, SNDCHART, INFODATA FROM KRX', infoData)
+        print('[DEBUG] MAIN.PY, SNDCHART, CHARTDATA FROM KRX', chartData)
+
+        if(infoData != None and infoData['DATE']!=recentRowFromDB['DATE']):
+
+            for each in recentRowFromDB.keys():
+                if(each in infoData.keys()):
+                    recentRowFromDB[each] = infoData[each]
+                    print(each,recentRowFromDB[each])
+                elif(each not in ['STOCKNAME','STOCKCODE','ADJRATIO']):
+                    recentRowFromDB[each] = 0
+
+            chartData['result'].append(recentRowFromDB)
+        else:
+            infoData=chartData['result'][-1]
 
 
-    # 최신데이터가 없으면 차트데이터에 가격만 붙여주는 작업
-    recentRowFromDB=copy.deepcopy(chartData['result'][-1])
+    return render_template('sndChart.html', stockinfo=infoData, sampledata=chartData,)
 
-    # 최신데이터가 없으면 차트데이터에 가격만 붙여주는 작업
-    if(infoData != None and infoData['DATE']!=recentRowFromDB['DATE']):
-        for each in recentRowFromDB.keys():
-            if(each in infoData.keys()):
-                recentRowFromDB[each] = infoData[each]
-                print(each,recentRowFromDB[each])
-            elif(each not in ['STOCKNAME','STOCKCODE','ADJRATIO']):
-                recentRowFromDB[each] = 0
-    else:
-        infoData=chartData['result'][-1]
-    print(chartData['result'].append(recentRowFromDB))
-
-    return render_template('sndChart.html', stockinfo=infoData, sampledata=chartData)
 
 @application.route('/sndRankRelative', methods=['GET','POST'])
 def sndRankRelative():

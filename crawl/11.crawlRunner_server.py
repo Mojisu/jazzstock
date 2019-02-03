@@ -44,4 +44,4 @@ else :
     processrunner('05.sndBasicAnalysis.py',1)
     processrunner_forwin('07.crawl_forwin.py',3)
 
-print("[INFO] WHOLE PROCESS END, TIME SPEND :'", dt.now() - wholeStart)
+print("[INFO]  WHOLE PROCESS END, TIME SPEND :'", dt.now() - wholeStart)
