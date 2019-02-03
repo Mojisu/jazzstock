@@ -261,8 +261,6 @@ codeDic = {}
 
 start = dt.now()
 todaydate = dt.now().date()
-todaydate = '2019-01-22'
-
 db_readAll(dt.now().date())
 for i,eachCode in enumerate(codeDic.keys()):
 
