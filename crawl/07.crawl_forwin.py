@@ -55,7 +55,7 @@ for itr,eachCode in enumerate(list(codeDic.keys())[:min([len(codeDic),995])]):
         inserted_data_size = am.api_getSndForWin(apiObj, eachCode, dateA, sys.argv[1])
         time.sleep(0.5)
 
-        if (itr % 200 == 0):
+        if (itr % 400 == 0):
             print("[INFO]:", itr, eachCode, codeDic[eachCode], sys.argv[1], inserted_data_size, "rows inserted",
                   time.time() - start)
             time.sleep(0.3)
