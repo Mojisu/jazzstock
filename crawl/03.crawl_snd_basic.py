@@ -54,7 +54,7 @@ for i,eachCode in enumerate(list(codeDic.keys())[:min([len(codeDic),995])]):
         am.api_getSndDB(apiObj, eachCode, dateA)
         time.sleep(0.48)
 
-        if (i !=0 and i % 40 == 0):
+        if (i % 400 == 0):
             print("[INFO]:", i, eachCode, codeDic[eachCode], "inserted", time.time() - start)
             #print("[INFO]: wait for 30 second")
             time.sleep(2)
