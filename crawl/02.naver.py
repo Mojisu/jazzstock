@@ -15,8 +15,6 @@ def get_stake_info(code):
     distriPerc = df_list[1].ix[6][1].split('/')[1]
 
     shares = df_list[1].ix[6][1].split('/')[0]
-    print(["발행주식수",int(shares.replace('주 ','').replace(',',''))])
-    print(['유통주식수',int(int(shares.replace('주 ','').replace(',',''))*float(distriPerc.replace('%',''))*0.01)])
     for i in range (0,len(df_list[4])):
         if(str(df_list[4].ix[i][0]) != 'nan'):
             print([df_list[4].ix[i][0].split('외')[0].strip(),int(round(df_list[4].ix[i][1]))])
@@ -63,19 +61,15 @@ existsList = []
 
 print("[DEBUG] CRAWLING 시작")
 
-for eachRow in db.select(query):
-    print(eachRow)
+for i,eachRow in enumerate(db.select(query)):
 
     if(len(eachRow) > 0):
-        print(eachRow[0],'/',eachRow[1])
+
+        if(i%50==0):
+            print(eachRow[0],'/',eachRow[1])
 
         try:
             get_stake_info(eachRow[0])
         except:
             print("error 발생!")
-        time.sleep(0.2)
-print("[INFO] 종목명/종목코드를 메모리에 읽어왔습니다")
-
-# Main
-
-# get_stake_info('216050')
+        time.sleep(0.1)
