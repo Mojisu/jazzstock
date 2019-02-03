@@ -39,39 +39,26 @@ apiObj = kapi.Kiwoom()
 apiObj.comm_connect()
 
 dateA, dateB = am.api_checkDate(apiObj, dp.todayStr('n'))
-
-print(dp.todayStr('n'))
-print(dateA, dateB)
-
 target_dt = dateA[:4] + '-' + dateA[4:6] + '-' + dateA[6:]
 
 
 
-print(dateA, sys.argv[1])
 db_readAll(dateA,sys.argv[1])
 
 
 
 itr = 0
 start = time.time()
-for eachCode in codeDic.keys():
-    itr += 1
+for itr,eachCode in enumerate(list(codeDic.keys())[:min([len(codeDic),995])]):
 
-    # inserted_data_size = am.api_getSndForWin(apiObj, eachCode, dateA, sys.argv[1])
-    # time.sleep(0.5)
-    # print("[INFO]:", itr, eachCode, codeDic[eachCode], sys.argv[1], inserted_data_size, "rows inserted",
-    #       time.time() - start)
-    # if (itr % 18 == 0):
-    #     print("[INFO]: wait for 30 second")
-    #     time.sleep(1)
-    #
     try:
         inserted_data_size = am.api_getSndForWin(apiObj, eachCode, dateA, sys.argv[1])
         time.sleep(0.5)
-        print("[INFO]:", itr, eachCode, codeDic[eachCode],sys.argv[1], inserted_data_size, "rows inserted", time.time()-start)
-        if (itr % 18 == 0):
-            print("[INFO]: wait for 30 second")
-            time.sleep(1)
+
+        if (itr % 200 == 0):
+            print("[INFO]:", itr, eachCode, codeDic[eachCode], sys.argv[1], inserted_data_size, "rows inserted",
+                  time.time() - start)
+            time.sleep(0.3)
 
     except:
         print('error! :', eachCode)
