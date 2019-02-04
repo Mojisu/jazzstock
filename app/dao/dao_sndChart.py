@@ -28,11 +28,12 @@ class Database:
         self.getConn()
         cursor = self.cnxn.cursor()
         query = '''
-                           SELECT A.STOCKNAME, A.STOCKCODE, CAST(A.DATE AS char) AS DATE, B.ADJRATIO 
+                            SELECT A.STOCKNAME, A.STOCKCODE, CAST(A.DATE AS char) AS DATE, B.ADJRATIO 
                                , B.OPEN, B.HIGH, B.LOW, B.CLOSE
                                , C.VOLUME
                                , C.FOREI
                                , C.INS, C.PER, C.YG, C.SAMO, C.TUSIN, C.FINAN, C.BANK, C.NATION, C.INSUR, C.OTHERCORPOR, C.OTHERFOR, C.OTHERFINAN
+                               , MG, GM, CS, MR, MQ, CL, UB, NM, DC, DW
 
 
                             FROM
@@ -64,7 +65,11 @@ class Database:
                                , FOREI, INS, PER, YG, SAMO, TUSIN, FINAN, BANK, INSUR, NATION, OTHERCORPOR, OTHERFOR, OTHERFINAN
                                FROM jazzdb.T_STOCK_SND_DAY
                             ) C ON (A.STOCKCODE = C.STOCKCODE AND A.DATE = C.DATE )
-                            ;
+                            
+							JOIN (
+                               SELECT STOCKCODE, DATE, MG, GM, CS, MR, MQ, CL, UB, NM, DC, DW
+                               FROM jazzdb.T_STOCK_SND_WINDOW_MERGED
+                            ) D ON (A.STOCKCODE = D.STOCKCODE AND A.DATE = D.DATE );
         ''' % (code, code)
         cursor.execute(query)
         rt = {'result':
@@ -259,4 +264,53 @@ class Database:
         else:
             return None
 
+
+
+    def sndChartForei(self, code):
+
+        self.getConn()
+        cursor = self.cnxn.cursor()
+        query = '''
+                           SELECT A.STOCKNAME, A.STOCKCODE, CAST(A.DATE AS char) AS DATE, B.ADJRATIO 
+                               , B.OPEN, B.HIGH, B.LOW, B.CLOSE
+                               , C.VOLUME
+                               , C.FOREI
+                               , C.INS, C.PER, C.YG, C.SAMO, C.TUSIN, C.FINAN, C.BANK, C.NATION, C.INSUR, C.OTHERCORPOR, C.OTHERFOR, C.OTHERFINAN
+
+
+                            FROM
+                            (
+                               SELECT A.STOCKNAME, A.STOCKCODE, DIX.DATE
+                               FROM jazzdb.T_STOCK_CODE_MGMT A
+
+                               JOIN (
+
+                                 SELECT DATE   
+                                  FROM jazzdb.T_DATE_INDEXED
+                                 WHERE CNT BETWEEN 0 AND 299
+
+                               ) DIX 
+
+                               WHERE 1=1
+                               AND (STOCKCODE = '%s' OR STOCKNAME = '%s')
+                            ) A
+
+
+                            JOIN (
+                               SELECT STOCKCODE, DATE, OPEN, HIGH, LOW, CLOSE, ADJCLASS, ADJRATIO
+                               FROM jazzdb.T_STOCK_OHLC_DAY
+                            ) B ON (A.STOCKCODE = B.STOCKCODE AND A.DATE = B.DATE )
+
+
+                            JOIN (
+                               SELECT STOCKCODE, DATE, VOLUME
+                               , FOREI, INS, PER, YG, SAMO, TUSIN, FINAN, BANK, INSUR, NATION, OTHERCORPOR, OTHERFOR, OTHERFINAN
+                               FROM jazzdb.T_STOCK_SND_DAY
+                            ) C ON (A.STOCKCODE = C.STOCKCODE AND A.DATE = C.DATE )
+                            ;
+        ''' % (code, code)
+        cursor.execute(query)
+        rt = {'result':
+                  [dict(zip([column[0] for column in cursor.description], row))
+                   for row in cursor.fetchall()]}
 

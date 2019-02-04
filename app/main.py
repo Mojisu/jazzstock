@@ -9,6 +9,10 @@ application = Flask(__name__)
 def home():
     return render_template('home.html')
 
+@application.route('/info')
+def info():
+    return render_template('info.html')
+
 @application.route('/sndChart', methods=['GET'])
 def sndChart():
 
@@ -46,7 +50,7 @@ def sndChart():
             infoData=chartData['result'][-1]
 
 
-    return render_template('sndChart.html', stockinfo=infoData, sampledata=chartData,)
+    return render_template('sndChart.html', stockinfo=infoData, sampledata=chartData,stockname=rs[1])
 
 
 @application.route('/sndRankRelative', methods=['GET','POST'])

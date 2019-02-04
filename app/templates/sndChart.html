@@ -2,25 +2,34 @@
 {% block content %}
 
 {% if stockinfo != None and sampledata != None  %}
+
 <div class="jumbo">
 
+    <h3>{{stockname[0]}} ({{stockname[1]}})</h3>
 
-    시가 : {{ stockinfo['OPEN'] }}<br>
-    고가 : {{ stockinfo['HIGH'] }}<br>
-    저가 : {{ stockinfo['LOW'] }}<br>
-    현재가(종가) : {{ stockinfo['CLOSE'] }}<br>
-    가격차트 업데이트 시각 :<br>
-    수급차트 업데이트 시각 :
-
+  <label><input type="radio" name="chartType" value="merge" checked=true onclick="myFunction()"><span>Merged</span></label>
+  <label><input type="radio" name="chartType" value="ins" onclick="myFunction()"><span>Ins</span></label>
+  <label><input type="radio" name="chartType" value="forwin" onclick="myFunction()"><span>Foreigner</span></label>
 
 
 </div>
 <div id="chart" class="sndChart"></div>
-
 <script type="text/javascript" src="static/js/echarts.min.js"></script>
-<script type="text/javascript" src="static/js/sndChart.js"></script>
+<script type="text/javascript" src="static/js/sndChart_double.js"></script>
 <script>
-window.onload = search({{ sampledata.result|tojson }});
+
+var flag = "merge"
+
+function myFunction() {
+    flag = document.querySelector('input[name="chartType"]:checked').value;
+    console.log(flag)
+    search({{ sampledata.result|tojson }},flag)
+}
+
+
+window.onload = search({{ sampledata.result|tojson }},flag);
+
+
 </script>
 
 
