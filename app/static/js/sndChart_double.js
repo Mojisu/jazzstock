@@ -182,6 +182,10 @@ if (flag =='merge'){
             top: 400,
             left:'10%',
             align:'left',
+            textStyle:{
+                fontSize:14,
+                fontWeight:'bold'
+            },
             selected:{
 
             '기관':true,
@@ -459,7 +463,7 @@ if (flag =='merge'){
             yAxisIndex: 2, // Index 를 맞춰줘야 함
             data: inscumsum,
             itemStyle: {
-                color: '#343148',
+                color: '#DD4132',
             },
             lineStyle: {
                 type:'dashed'
@@ -474,7 +478,7 @@ if (flag =='merge'){
             yAxisIndex: 2, // Index 를 맞춰줘야 함
             data: foreicumsum,
             itemStyle: {
-                color: '#D69C2F',
+                color: '#00539C',
             },
             lineStyle: {
                 type:'dashed'
@@ -490,7 +494,7 @@ if (flag =='merge'){
             yAxisIndex: 2, // Index 를 맞춰줘야 함
             data: percumsum,
             itemStyle: {
-                color: '#D69C2F',
+                color: '#343148',
             },
             lineStyle: {
                 type:'dashed'
@@ -505,7 +509,7 @@ if (flag =='merge'){
             yAxisIndex: 2, // Index 를 맞춰줘야 함
             data: ygcumsum,
             itemStyle: {
-                color: '#00539C',
+                color: '#FE840E',
             },
             lineStyle: {
                 type:'dashed'
@@ -519,7 +523,7 @@ if (flag =='merge'){
             yAxisIndex: 2, // Index 를 맞춰줘야 함
             data: samocumsum,
             itemStyle: {
-                color: '#8D9440',
+                color: '#3F69AA',
             },
             lineStyle: {
                 type:'dashed'
@@ -535,7 +539,7 @@ if (flag =='merge'){
             yAxisIndex: 2, // Index 를 맞춰줘야 함
             data: tusincumsum,
             itemStyle: {
-                color: '#FE840E',
+                color: '#D5AE41',
             },
             lineStyle: {
                 type:'dashed'
@@ -550,7 +554,7 @@ if (flag =='merge'){
             yAxisIndex: 2, // Index 를 맞춰줘야 함
             data: financumsum,
             itemStyle: {
-                color: '#DD4132',
+                color: '#9C9A40',
             },
             lineStyle: {
                 type:'dashed'
@@ -565,7 +569,7 @@ if (flag =='merge'){
             yAxisIndex: 2, // Index 를 맞춰줘야 함
             data: nationcumsum,
             itemStyle: {
-                color: '#7f4145',
+                color: '#C48F65',
             },
             lineStyle: {
                 type:'dashed'
@@ -580,7 +584,7 @@ if (flag =='merge'){
             yAxisIndex: 2, // Index 를 맞춰줘야 함
             data: mgcumsum,
             itemStyle: {
-                color: '#343148',
+                color: '#005960',
             },
             lineStyle: {
                 type:'dashed'
@@ -594,7 +598,7 @@ if (flag =='merge'){
             yAxisIndex: 2, // Index 를 맞춰줘야 함
             data: gmcumsum,
             itemStyle: {
-                color: '#343148',
+                color: '#5A7247',
             },
             lineStyle: {
                 type:'dashed'
@@ -608,7 +612,7 @@ if (flag =='merge'){
             yAxisIndex: 2, // Index 를 맞춰줘야 함
             data: cscumsum,
             itemStyle: {
-                color: '#343148',
+                color: '#B76BA3',
             },
             lineStyle: {
                 type:'dashed'
@@ -622,7 +626,7 @@ if (flag =='merge'){
             yAxisIndex: 2, // Index 를 맞춰줘야 함
             data: mrcumsum,
             itemStyle: {
-                color: '#343148',
+                color: '#CE3175',
             },
             lineStyle: {
                 type:'dashed'
@@ -636,7 +640,7 @@ if (flag =='merge'){
             yAxisIndex: 2, // Index 를 맞춰줘야 함
             data: mqcumsum,
             itemStyle: {
-                color: '#343148',
+                color: '#006E51',
             },
             lineStyle: {
                 type:'dashed'
@@ -650,7 +654,7 @@ if (flag =='merge'){
             yAxisIndex: 2, // Index 를 맞춰줘야 함
             data: clcumsum,
             itemStyle: {
-                color: '#343148',
+                color: '#9E4624',
             },
             lineStyle: {
                 type:'dashed'
@@ -664,7 +668,7 @@ if (flag =='merge'){
             yAxisIndex: 2, // Index 를 맞춰줘야 함
             data: ubcumsum,
             itemStyle: {
-                color: '#343148',
+                color: '#B93A32',
             },
             lineStyle: {
                 type:'dashed'
@@ -678,7 +682,7 @@ if (flag =='merge'){
             yAxisIndex: 2, // Index 를 맞춰줘야 함
             data: nmcumsum,
             itemStyle: {
-                color: '#343148',
+                color: '#034f84',
             },
             lineStyle: {
                 type:'dashed'
@@ -692,7 +696,7 @@ if (flag =='merge'){
             yAxisIndex: 2, // Index 를 맞춰줘야 함
             data: dccumsum,
             itemStyle: {
-                color: '#343148',
+                color: '#92a8d1',
             },
             lineStyle: {
                 type:'dashed'
@@ -706,7 +710,7 @@ if (flag =='merge'){
             yAxisIndex: 2, // Index 를 맞춰줘야 함
             data: dwcumsum,
             itemStyle: {
-                color: '#343148',
+                color: '#7e4a35',
             },
             lineStyle: {
                 type:'dashed'

@@ -169,7 +169,19 @@ class Database:
             JOIN jazzdb.T_STOCK_CODE_MGMT B USING (STOCKCODE)
             JOIN jazzdb.T_DATE_INDEXED C USING (DATE)
             WHERE 1=1
-            AND (I1>0 OR F1>0) 
+            AND (
+                (I1>0.01 AND IR <50) OR 
+                (F1>0.01 AND FR <50) OR 
+                (YG1>0.005 AND YR <50) OR 
+                (S1>0.005 AND SR <50) OR 
+                (T1>0.005 AND TR <50) OR 
+                (FN1>0.005 AND FNR <50) OR 
+                (IS1>0.005 AND ISR <50) OR 
+                (NT1>0.005 AND NTR <50) OR 
+                (BK1>0.005 AND BKR <50) OR 
+                (OC1>0.005 AND OCR <50)
+                
+            )
             AND C.CNT = 0
             ORDER BY %sR %s
             LIMIT 100
