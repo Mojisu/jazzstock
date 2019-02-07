@@ -30,7 +30,7 @@ def processrunner_forwin(srcname,itrnum, wincode):
 
 wholeStart = dt.now()
 # server mode , sys argv 가 주어짐, 그러면 특정시간범위 안이면 이 스크립트가 실행되게
-if(len(sys.argv)==1):
+if(len(sys.argv)==0):
 
     if(dt.now().time().hour in [12,13]):
         processrunner('03.crawl_snd_basic.py', 1)
@@ -38,10 +38,16 @@ if(len(sys.argv)==1):
 # local mode
 else :
 
-    processrunner('01.boot.py',1)
-    processrunner('03.crawl_snd_basic.py',3)
-    processrunner('04.dateindexupdate.py',1)
-    processrunner('05.sndBasicAnalysis.py',1)
-    processrunner_forwin('07.crawl_forwin.py',3)
+    #processrunner('01.boot.py',1)
+    # processrunner('99.crawl_ohlc.py', 3)
+    # processrunner('03.crawl_snd_basic.py',2)
+    # processrunner('04.dateindexupdate.py',1)
+    # processrunner('05.sndBasicAnalysis.py',1)
+
+
+#    for winCode in ['36', '42', '44', '45', '54', '61', '58', '43', '35', '41']:
+    for winCode in ['42', '44', '45', '54', '61', '58', '43', '35', '41']:
+
+        processrunner_forwin('07.crawl_forwin.py',3,winCode)
 
 print("[INFO]  WHOLE PROCESS END, TIME SPEND :'", dt.now() - wholeStart)

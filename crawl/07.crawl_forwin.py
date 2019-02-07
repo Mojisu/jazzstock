@@ -25,6 +25,7 @@ def db_readAll(dt,winCode):
                         AND A.LISTED = 1
                                                         """ % (dt,winCode)
 
+    print(query)
     for eachRow in db.select(query):
         if (len(eachRow) > 0):
             itemDic[eachRow[1].upper()] = eachRow[0]
@@ -39,9 +40,7 @@ apiObj = kapi.Kiwoom()
 apiObj.comm_connect()
 
 dateA, dateB = am.api_checkDate(apiObj, dp.todayStr('n'))
-target_dt = dateA[:4] + '-' + dateA[4:6] + '-' + dateA[6:]
-
-
+#target_dt = dateA[:4] + '-' + dateA[4:6] + '-' + dateA[6:]
 
 db_readAll(dateA,sys.argv[1])
 
@@ -63,7 +62,10 @@ for itr,eachCode in enumerate(list(codeDic.keys())[:min([len(codeDic),995])]):
     except:
         print('error! :', eachCode)
         itr += 1
-        time.sleep(1.5)
+        time.sleep(0.5)
+
+
+
 
 
 

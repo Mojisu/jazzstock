@@ -14,5 +14,5 @@ def processrunner_forwin(srcname,itrnum, wincode):
 
 #for winCode in ['36','42','44','45','54','61','58','43','35','41']:
 
-for winCode in ['36', '41']:
-    processrunner_forwin('07.crawl_forwin.py',3, winCode)
+for winCode in ['58']:
+    processrunner_forwin('07.crawl_forwin.py',1, winCode)
