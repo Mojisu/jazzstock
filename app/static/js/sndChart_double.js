@@ -523,7 +523,7 @@ if (flag =='merge'){
             yAxisIndex: 2, // Index 를 맞춰줘야 함
             data: samocumsum,
             itemStyle: {
-                color: '#3F69AA',
+                color: '#52a93e',
             },
             lineStyle: {
                 type:'dashed'
