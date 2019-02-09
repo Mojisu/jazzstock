@@ -11,7 +11,7 @@ def home():
 
 @application.route('/info')
 def info():
-    return render_template('info.html')
+    return render_template('home.html')
 
 @application.route('/sndChart', methods=['GET'])
 def sndChart():
