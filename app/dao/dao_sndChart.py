@@ -111,7 +111,7 @@ class Database:
             JOIN jazzdb.T_DATE_INDEXED C USING (DATE)
             WHERE 1=1
             AND (I1>0 OR F1>0) 
-            AND C.CNT = 0
+            AND C.CNT = 1
             ORDER BY %s1 %s
             LIMIT 100
         
