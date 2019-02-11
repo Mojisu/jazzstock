@@ -91,7 +91,7 @@ def db_readAll(dt):
 itemDic, codeDic = {},{}
 
 
-todaydate = '2019-02-07'
+todaydate = '2019-02-11'
 db_readAll(todaydate)
 
 start = dt.now()
