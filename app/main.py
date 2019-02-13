@@ -105,10 +105,8 @@ def sndRankIndependence():
         else:
             request_order = ['I']
 
-        if ('by' in dict(request.form)):
-            request_by = dict(request.form)['by']
-        else:
-            request_by = ['DESC']
+
+        request_by = ['ASC']
 
 
 

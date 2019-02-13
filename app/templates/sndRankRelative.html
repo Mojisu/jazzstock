@@ -25,6 +25,7 @@ function checkCheckbox(frm,obj,num) {
 function setStorage(){
     var q_window = [];
     var q_interval = [];
+    var q_order = [];
     var window = document.getElementsByName("window");
     for (var i = 0; i < window.length; i++){
 
@@ -43,8 +44,19 @@ function setStorage(){
             q_interval.push(interval[i].value)
         }
     }
+
+
+
+    var order = document.getElementsByName("order");
+    selectedorderindex = order[0].selectedIndex
+
+    var by = document.getElementsByName("by");
+    selectedbyindex = by[0].selectedIndex
+
     localStorage.setItem("checked_window",q_window);
     localStorage.setItem("checked_interval",q_interval);
+    localStorage.setItem("selected_order_index",selectedorderindex);
+    localStorage.setItem("selected_order_by",selectedbyindex);
 
 }
 
@@ -59,6 +71,16 @@ function onload(){
     var q_interval = localStorage.getItem("checked_interval").split(',')
     }
     else q_interval = ['1','5','20']
+
+    if(localStorage.getItem("selected_order_index")!=null){
+    var selectedorder = localStorage.getItem("selected_order_index")
+    }
+    else selectedorder = 0
+
+    if(localStorage.getItem("selected_order_by")!=null){
+    var selectedby = localStorage.getItem("selected_order_index")
+    }
+    else selectedby = 0
 
 
     var window = document.getElementsByName("window");
@@ -80,6 +102,9 @@ function onload(){
         }
     }
 
+    document.getElementsByName("order")[0].selectedIndex = selectedorder;
+    document.getElementsByName("by")[0].selectedIndex = selectedby;
+
 
 }
 
@@ -88,6 +113,11 @@ function onload(){
 
 
 <body onload="onload()">
+<div class="jumbo">
+       <h3>
+           <a href="http://rubenchu.blog.me/221462571954"> 분석샘플 보기 </a>
+        </h3>
+</div>
 <div class="selection">
      <form method="post" name="form_name" id="form_name">
 

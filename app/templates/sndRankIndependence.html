@@ -21,17 +21,50 @@ function checkCheckbox(frm,obj,num) {
   }
 }
 
-var currentDate = date.toISOString().slice(0,10);
 
+function setStorage(){
+
+
+    var order = document.getElementsByName("order");
+    selectedorderindex = order[0].selectedIndex
+
+
+    localStorage.setItem("selected_order_by",selectedbyindex);
+
+}
+
+function onload(){
+
+
+    if(localStorage.getItem("selected_order_index")!=null){
+    var selectedorder = localStorage.getItem("selected_order_index")
+    }
+    else selectedorder = 0
+
+
+
+    document.getElementsByName("order")[0].selectedIndex = selectedorder;
+
+
+
+}
 </script>
 
 
+<body onload="onload()">
+<div class="jumbo">
+       <h3>
+           <a href="http://rubenchu.blog.me/221462571954"> 분석샘플 보기 </a>
+        </h3>
+</div>
 
 <div class="selection">
      <form method="post" name="form_name" id="form_name">
 
 
         <div class="row">
+
+
             <div class="col-25">
              ORDER BY :
             </div>
@@ -52,11 +85,7 @@ var currentDate = date.toISOString().slice(0,10);
                   <option value="P">개인</option>
                 </select>
 
-                 <select name="by">
-                   <option value="ASC">오름차순</option>
-                  <option value="DESC">내림차순</option>
 
-                </select>
 
             </div>
         </div>
@@ -67,7 +96,7 @@ var currentDate = date.toISOString().slice(0,10);
             </div>
             <div class="col-75">
                 <input type="date" name='date' min="2019-01-01" value="{{date}}">
-                <input type="submit" value="검색">
+                <input type="submit" value="검색" onclick="setStorage()">
             </div>
         </div>
 
@@ -161,4 +190,5 @@ var currentDate = date.toISOString().slice(0,10);
 
     </table>
 </div>
+</body>
 {% endblock %}
