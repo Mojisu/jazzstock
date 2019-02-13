@@ -91,13 +91,15 @@ def db_readAll(dt):
 itemDic, codeDic = {},{}
 
 
-todaydate = '2019-02-11'
+todaydate = dt.now().date()
 db_readAll(todaydate)
+
 
 start = dt.now()
 for i,eachCode in enumerate(codeDic.keys()):
     try:
         mergeforwin(eachCode)
+        print(eachCode)
         if (i % 400 == 0):
             print(i, todaydate, eachCode, dt.now() - start)
     except:
