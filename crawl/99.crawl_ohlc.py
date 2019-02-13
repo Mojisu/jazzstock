@@ -52,10 +52,9 @@ for itr,eachCode in enumerate(list(codeDic.keys())[:min([len(codeDic),995])]):
 
     try:
         inserted_data_size = am.api_getDayChart(apiObj, eachCode, dateA)
-        time.sleep(0.42)
-        if (itr % 18 == 0):
-            print("[INFO]: wait for 30 second")
-            print("[INFO]:", itr, eachCode, codeDic[eachCode], inserted_data_size, "rows inserted", time.time() - start)
+        time.sleep(0.5)
+        if (itr % 400 == 0):
+            print("[INFO]:", itr, eachCode, codeDic[eachCode], inserted_data_size, "rows inserted", time.time() - start, time.time())
             time.sleep(1)
 
     except:
