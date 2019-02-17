@@ -81,13 +81,16 @@ class Database:
         self.closeConn()
         return rt
 
-    def sndRank(self, column, interval, order, by):
+    def sndRank(self, column, interval, order, by, market):
 
 
         queryhead = '''
         
-                SELECT B.STOCKNAME, DATE, CLOSE, 
-    
+                SELECT B.STOCKNAME
+                    , CASE WHEN E.CATEGORY IS NULL THEN 'NONE' ELSE E.CATEGORY END AS CATEGORY
+                    , FORMAT(D.SHARE*CLOSE/100000000000,1) AS MC
+                    , DATE
+                    , CLOSE,
     
         '''
 
@@ -104,20 +107,49 @@ class Database:
 
         print('[DEBUG]' , querycont[:-2])
 
-        querytail = '''
+        querytail= '''
         
             FROM jazzdb.T_STOCK_SND_ANALYSIS_RESULT_TEMP A
             JOIN jazzdb.T_STOCK_CODE_MGMT B USING (STOCKCODE)
             JOIN jazzdb.T_DATE_INDEXED C USING (DATE)
-            WHERE 1=1
+            JOIN (
+            
+                SELECT STOCKCODE, SHARE
+                FROM
+                (
+                    SELECT STOCKCODE, SHARE, DATE,
+                        ROW_NUMBER() OVER (PARTITION BY STOCKCODE ORDER BY DATE DESC) AS RN 
+                    FROM jazzdb.T_STOCK_SHARES_INFO
+                    WHERE 1=1
+                    AND HOLDER = '발행주식수'
+                ) A
+                WHERE A.RN = 1
+            
+            ) D USING (STOCKCODE)
+            LEFT JOIN ( 
+            SELECT STOCKCODE, GROUP_CONCAT(CATEGORY) AS CATEGORY
+            FROM jazzdb.T_STOCK_CATEGORY_ROBO
+            GROUP BY STOCKCODE 
+            )E
+            USING(STOCKCODE)
+            WHERE 1=1'''
+
+        querycond = '''
+        
+            AND B.MARKET IN %s
+        
+        ''' % (str(market).replace('[','(').replace(']',')'))
+
+        queryend = '''
+        
             AND (I1>0 OR F1>0) 
-            AND C.CNT = 1
+            AND C.CNT = 0
             ORDER BY %s1 %s
             LIMIT 100
         
         '''%(order[0],by[0])
 
-        fullquery = queryhead + querycont[:-2] + querytail
+        fullquery = queryhead + querycont[:-2] + querytail + querycond + queryend
         print('fq: \n ', fullquery)
 
         self.getConn()

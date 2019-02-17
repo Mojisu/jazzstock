@@ -1,8 +1,12 @@
 {% extends "layout.html" %}
 
 {% block content %}
+
+<link href="static/css/nouislider.css" rel="stylesheet">
+<script src="static/js/nouislider.js"></script>
 <script src="static/js/sorttable.js"></script>
 <script language="javascript">
+
 function checkCheckbox(frm,obj,num) {
   var str = obj.name;
   var len = frm.length;
@@ -26,6 +30,8 @@ function setStorage(){
     var q_window = [];
     var q_interval = [];
     var q_order = [];
+    var q_market = [];
+
     var window = document.getElementsByName("window");
     for (var i = 0; i < window.length; i++){
 
@@ -45,13 +51,21 @@ function setStorage(){
         }
     }
 
+    var market = document.getElementsByName("market");
+    for (var i = 0; i < market.length; i++){
 
+        if(market[i].type =='checkbox' && market[i].checked == true)
+        {
+            q_market.push(market[i].value)
+        }
+    }
 
     var order = document.getElementsByName("order");
     selectedorderindex = order[0].selectedIndex
 
     localStorage.setItem("checked_window",q_window);
     localStorage.setItem("checked_interval",q_interval);
+    localStorage.setItem("checked_market",q_market);
     localStorage.setItem("selected_order_index",selectedorderindex);
 
 }
@@ -72,6 +86,12 @@ function onload(){
     var selectedorder = localStorage.getItem("selected_order_index")
     }
     else selectedorder = 0
+
+
+    if(localStorage.getItem("checked_market")!=null){
+    var q_market = localStorage.getItem("checked_market").split(',')
+    }
+    else q_market = ['0','1']
 
 
     var window = document.getElementsByName("window");
@@ -95,6 +115,37 @@ function onload(){
 
     document.getElementsByName("order")[0].selectedIndex = selectedorder;
 
+    var market = document.getElementsByName("market");
+    for (var i = 0; i < market.length; i++)
+    {
+
+
+        if(market[i].type =='checkbox' && q_market.includes(market[i].value)){
+            market[i].checked=true
+        }
+    }
+
+
+
+    var slider = document.getElementById('slider');
+
+    noUiSlider.create(slider, {
+        start: [20, 80],
+        connect: true,
+        range: {
+            'min': 0,
+            'max': 100
+        }
+    });
+
+    var skipValues = [
+    document.getElementById('mc-lower'),
+    document.getElementById('mc-upper')];
+
+    slider.noUiSlider.on('update', function (values, handle) {
+    skipValues[handle].innerHTML = values[handle];
+    })
+
 }
 
 
@@ -107,9 +158,8 @@ function onload(){
            <a href="http://rubenchu.blog.me/221462571954"> 분석샘플 보기 </a>
         </h3>
 </div>
-<div class="selection">
-     <form method="post" name="form_name" id="form_name">
-
+<form method="post" name="form_name" id="form_name">
+    <div class="selection">
         <div class="row">
             <div class="col-25">
                 WINDOW :
@@ -139,6 +189,20 @@ function onload(){
                 <input type="checkbox" name="interval" value="60" autocomplete="off" onClick="checkCheckbox(this.form,this,3)"> 60<br>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-25">
+                MARKET :
+            </div>
+            <div class="col-75">
+                <input type="checkbox" name="market" value="0" autocomplete="off"  onClick="checkCheckbox(this.form,this,3)"> KOSPI
+                <input type="checkbox" name="market" value="1"  autocomplete="off" onClick="checkCheckbox(this.form,this,3)"> KOSDAQ
+
+            </div>
+        </div>
+
+
+
 
         <div class="row">
             <div class="col-25">
@@ -172,6 +236,17 @@ function onload(){
 
         <div class="row">
             <div class="col-25">
+                MC RANGE (NOT YET):
+            </div>
+            <div class="col-75">
+
+                <span id="mc-lower"></span>~
+                <span id="mc-upper"></span>
+                <div id="slider"></div>
+            </div>
+        </div>
+                <div class="row">
+            <div class="col-25">
                 DATE (NOT YET) :
             </div>
             <div class="col-75">
@@ -179,9 +254,10 @@ function onload(){
                 <input type="submit" value="검색" onclick="setStorage()">
             </div>
         </div>
-    </form>
-      <br>
-</div>
+
+    </div>
+</form>
+
 
     <table id="sndrank" class="sortable">
         <tr>
@@ -205,8 +281,14 @@ function onload(){
                             </a>
                     </td>
 
+                {% elif eachcol=='MC' or eachcol =='CATEGORY' %}
+                    <td nowrap>{{value[eachcol]}}</td>
+
                 {% elif eachcol=='CLOSE' %}
                     <td class="money">{{ "{:,}".format(value[eachcol]) }}</td>
+
+
+
 
                 {% elif eachcol!='DATE' %}
 
@@ -264,4 +346,6 @@ function onload(){
     </table>
 </div>
 </body>
+
+
 {% endblock %}

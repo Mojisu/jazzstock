@@ -81,15 +81,24 @@ def sndRankRelative():
         else:
             request_by = ['DESC']
 
+        if ('market' in dict(request.form)):
+            request_market = dict(request.form)['market']
+        else:
+            request_market = ['0','1']
+
+        print(request_market)
     # select option == None, default option
     else:
         request_window = ['YG', 'S']
         request_by = ['DESC']
         request_order = ['I']
         request_interval = ['1', '5', '20']
+        request_market = ['0', '1']
 
     dao = dao_sndChart.Database()
-    column, table, dt = dao.sndRank(request_window,request_interval,request_order,request_by)
+    column, table, dt = dao.sndRank(request_window,request_interval,request_order,request_by,request_market)
+    print(table)
+    print(column)
     return render_template('sndRankRelative.html', sampledata=table, column=column, date = dt)
 
 @application.route('/sndRankIndependence', methods=['GET','POST'])

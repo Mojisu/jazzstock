@@ -180,6 +180,7 @@ input[type=button], input[type=submit], input[type=reset] {
 
 table {
   font-family: arial, sans-serif;
+  font-size:13px;
   border-collapse: collapse;
   margin:10px;
 }
@@ -198,6 +199,14 @@ th {
 }
 
 td:nth-child(1) {
+  text-align: center;
+  width: 120px;
+  min-width: 8em;
+  max-width: 80em;
+  word-break: break-all;
+}
+
+td:nth-child(2) {
   text-align: center;
   width: 120px;
   min-width: 8em;
