@@ -215,7 +215,7 @@ class Database:
             AND (
                 (I1>0.005 AND IR <100) OR 
                 (F1>0.005 AND FR <100) OR 
-                (Y1>0.0025 AND YR <100) OR 
+                (YG1>0.0025 AND YR <100) OR 
                 (S1>0.0025 AND SR <100) OR 
                 (T1>0.0025 AND TR <100) OR 
                 (FN1>0.0025 AND FNR <100) OR 
