@@ -32,9 +32,9 @@ def sndChart():
         recentRowFromDB=copy.deepcopy(chartData['result'][-1])
 
         # 최신데이터가 없으면 차트데이터에 가격만 붙여주는 작업
-        print('[DEBUG] ',rs[1])
-        print('[DEBUG] MAIN.PY, SNDCHART, INFODATA FROM KRX', infoData)
-        print('[DEBUG] MAIN.PY, SNDCHART, CHARTDATA FROM KRX', chartData)
+        # print('[DEBUG] ',rs[1])
+        # print('[DEBUG] MAIN.PY, SNDCHART, INFODATA FROM KRX', infoData)
+        # print('[DEBUG] MAIN.PY, SNDCHART, CHARTDATA FROM KRX', chartData)
 
         if(infoData != None and infoData['DATE']!=recentRowFromDB['DATE']):
 
@@ -86,7 +86,12 @@ def sndRankRelative():
         else:
             request_market = ['0','1']
 
-        print(request_market)
+
+        if ('range' in dict(request.form)):
+            request_range = dict(request.form)['range']
+        else:
+            request_range = ['0:0.8','0.8:2','2:4','4:8','8:10','10:500']
+
     # select option == None, default option
     else:
         request_window = ['YG', 'S']
@@ -94,11 +99,14 @@ def sndRankRelative():
         request_order = ['I']
         request_interval = ['1', '5', '20']
         request_market = ['0', '1']
+        request_range = ['0:0.8', '0.8:2', '2:4', '4:8', '8:10', '10:500']
 
     dao = dao_sndChart.Database()
-    column, table, dt = dao.sndRank(request_window,request_interval,request_order,request_by,request_market)
-    print(table)
-    print(column)
+    column, table, dt = dao.sndRank(request_window,request_interval,request_order,request_by,request_market,request_range)
+
+
+    #print(table)
+    #print(column)
     return render_template('sndRankRelative.html', sampledata=table, column=column, date = dt)
 
 @application.route('/sndRankIndependence', methods=['GET','POST'])
@@ -123,7 +131,7 @@ def sndRankIndependence():
 
     else:
 
-        print('xx')
+        #print('xx')
         request_by = ['ASC']
         request_order = ['I']
 

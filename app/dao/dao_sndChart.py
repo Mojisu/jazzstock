@@ -81,12 +81,13 @@ class Database:
         self.closeConn()
         return rt
 
-    def sndRank(self, column, interval, order, by, market):
+    def sndRank(self, column, interval, order, by, market, mcrange):
 
 
         queryhead = '''
         
                 SELECT B.STOCKNAME
+                    , CASE WHEN B.MARKET = '0' THEN '' ELSE '*' END AS MARKET
                     , CASE WHEN E.CATEGORY IS NULL THEN 'NONE' ELSE E.CATEGORY END AS CATEGORY
                     , FORMAT(D.SHARE*CLOSE/100000000000,1) AS MC
                     , DATE
@@ -105,7 +106,8 @@ class Database:
             for eachinterval in interval:
                 querycont = querycont + str(eachcolumn)+str(eachinterval)+', '
 
-        print('[DEBUG]' , querycont[:-2])
+        querycont = querycont + order[0] + 'R'
+        #print('[DEBUG]' , querycont)
 
         querytail= '''
         
@@ -136,12 +138,21 @@ class Database:
 
         querycond = '''
         
-            AND B.MARKET IN %s
+            AND B.MARKET IN %s 
+            AND (
         
         ''' % (str(market).replace('[','(').replace(']',')'))
 
+        for i,each in enumerate(mcrange):
+            #print(i,len(mcrange))
+            querycond +=''' FORMAT(D.SHARE*CLOSE/100000000000,1) BETWEEN %s and %s 
+            ''' %tuple(each.split(':'))
+            if i < len(mcrange)-1:
+                querycond +='''OR'''
+
+
         queryend = '''
-        
+            )
             AND (I1>0 OR F1>0) 
             AND C.CNT = 0
             ORDER BY %s1 %s
@@ -149,8 +160,8 @@ class Database:
         
         '''%(order[0],by[0])
 
-        fullquery = queryhead + querycont[:-2] + querytail + querycond + queryend
-        print('fq: \n ', fullquery)
+        fullquery = queryhead + querycont + querytail + querycond + queryend
+        #print('fq: \n ', fullquery)
 
         self.getConn()
         cursor = self.cnxn.cursor()
@@ -193,7 +204,7 @@ class Database:
         for each in column:
             querycont = querycont + str(each) + ', '
 
-        print('[DEBUG]', querycont[:-2])
+        #print('[DEBUG]', querycont[:-2])
 
         querytail = '''
     
@@ -204,7 +215,7 @@ class Database:
             AND (
                 (I1>0.005 AND IR <100) OR 
                 (F1>0.005 AND FR <100) OR 
-                (YG1>0.0025 AND YR <100) OR 
+                (Y1>0.0025 AND YR <100) OR 
                 (S1>0.0025 AND SR <100) OR 
                 (T1>0.0025 AND TR <100) OR 
                 (FN1>0.0025 AND FNR <100) OR 
@@ -221,7 +232,7 @@ class Database:
         ''' % (order[0], by[0])
 
         fullquery = queryhead + querycont[:-2] + querytail
-        print('fq: \n ', fullquery)
+        #print('fq: \n ', fullquery)
 
         ip = cs.ip
         id = cs.id
@@ -270,7 +281,7 @@ class Database:
 
     def stockinfo(self,stockcode):
 
-        print('[DEBUG] STOCKINFO METHOD LAUNCHED', stockcode)
+        #print('[DEBUG] STOCKINFO METHOD LAUNCHED', stockcode)
         url = 'http://asp1.krx.co.kr/servlet/krx.asp.XMLSise?code=%s' %(stockcode)
         xml = et.fromstring(requests.get(url).content.strip())
         # keys = ['day_Date','day_Start','day_High','day_Low','day_EndPrice','day_Volume','day_getAmount']
@@ -300,8 +311,8 @@ class Database:
 
                     rtlist.append(eachrow)
 
-        print('[DEBUG] STOCKINFO METHOD RETURN VALUE', rtlist)
-        print('[DEBUG] STOCKINFO METHOD FINISHED', stockcode)
+        #print('[DEBUG] STOCKINFO METHOD RETURN VALUE', rtlist)
+        #print('[DEBUG] STOCKINFO METHOD FINISHED', stockcode)
 
         if(len(rtlist)>0):
             return rtlist[0]

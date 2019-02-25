@@ -50,12 +50,12 @@ else :
     # processrunner('04.dateindexupdate.py',1)
     # processrunner('05.sndBasicAnalysis.py',1)
 
-
-    for winCode in ['36', '42', '44', '41']:
-            processrunner_forwin('07.crawl_forwin.py',3,winCode)
     #
-    # for winCode in ['61', '58', '43', '35', '41']:
+    # for winCode in ['36', '42', '44', '41']:
     #         processrunner_forwin('07.crawl_forwin.py',3,winCode)
+    # #
+    for winCode in ['61', '58', '43', '35', '41']:
+            processrunner_forwin('07.crawl_forwin.py',3,winCode)
 
     processrunner('08.merge_forwin.py',1)
 

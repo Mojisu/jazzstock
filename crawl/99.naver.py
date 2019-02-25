@@ -23,6 +23,7 @@ def get_stake_info(code):
     obj.append(["발행주식수",int(shares.replace('주 ','').replace(',',''))])
     obj.append(['유통주식수',int(int(shares.replace('주 ','').replace(',',''))*float(distriPerc.replace('%',''))*0.01)])
     for i in range(0, len(df_list[4])):
+
         if(str(df_list[4].ix[i][0]) != 'nan'):
             obj.append([df_list[4].ix[i][0].split('외')[0].strip(),df_list[4].ix[i][1]])
 
