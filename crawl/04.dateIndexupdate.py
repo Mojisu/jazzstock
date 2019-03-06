@@ -3,7 +3,7 @@ import manager.dbConnector as db
 
 queryt = '''
 
-TRUNCATE jazzdb.T_DATE_INDEXED;
+DELETE FROM jazzdb.T_DATE_INDEXED;
 
 
 '''
