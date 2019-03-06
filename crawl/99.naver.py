@@ -111,5 +111,5 @@ for i,eachRow in enumerate(db.select(query)):
             get_stake_info(eachRow[0])
             get_ohlc(eachRow[0])
         except:
-            print("error 발생!")
+            print(i,eachRow,"error 발생!")
         time.sleep(0.1)
