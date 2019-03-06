@@ -3,6 +3,9 @@ import manager.dateManager as dp
 import requests
 import pandas as pd
 import time
+import re
+from datetime import datetime as dt
+from lxml import html
 
 def get_stake_info(code):
     url = "http://companyinfo.stock.naver.com/v1/company/c1010001.aspx?cmp_cd=%s&target=finsum_more" %(code)
@@ -34,13 +37,48 @@ def get_stake_info(code):
         db.insert(query)
 
 
+def get_ohlc(code):
+    url = "https://finance.naver.com/item/coinfo.nhn?code=%s" % (code)
 
+    page = requests.get(url).content.decode('euc-kr', 'ignore')
+    tree = html.fromstring(page)
+
+    obj = tree.xpath('//dl[@class="blind"]//text()')
+
+    target = ['현재가', '시가', '고가', '저가', '거래량', '거래대금']
+    targetDic = {
+
+        '현재가': 'CLOSE',
+        '시가': 'OPEN',
+        '고가': 'HIGH',
+        '저가': 'LOW',
+        '거래량': 'VOLUME',
+        '거래대금': 'AMOUNT'
+
+    }
+
+    targetDicValue = {}
+    for each in obj:
+        if (len(each.strip()) > 0):
+            content = each.split(' ')
+            if (content[0] in target):
+                print(targetDic[content[0]], content[1])
+                targetDicValue[targetDic[content[0]]] = int(re.search(r'\d+', content[1].replace(',', '')).group())
+
+
+    query = '''
+            INSERT INTO `jazzdb`.`T_STOCK_OHLC_DAY` (`STOCKCODE`, `DATE`, `OPEN`, `HIGH`, `LOW`, `CLOSE`, `VALUE`, `ADJCLASS`, `ADJRATIO`) VALUES ('%s', '%s', '%d', '%d', '%d', '%d', '%d', '0', '-1');
+            ''' % (
+    code, today, targetDicValue['OPEN'], targetDicValue['HIGH'], targetDicValue['LOW'], targetDicValue['CLOSE'],
+    targetDicValue['AMOUNT'])
+
+    print(query)
+    db.insert(query)
 
 # Main
 #
 
-
-
+today = dt.now().date()
 query = """
 
                     SELECT A.STOCKCODE, A.STOCKNAME
@@ -71,6 +109,7 @@ for i,eachRow in enumerate(db.select(query)):
 
         try:
             get_stake_info(eachRow[0])
+            get_ohlc(eachRow[0])
         except:
             print("error 발생!")
         time.sleep(0.1)
