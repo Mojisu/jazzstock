@@ -205,6 +205,7 @@ FROM
 				FROM jazzdb.T_STOCK_SHARES_INFO
 				WHERE 1=1
 				AND HOLDER = '유통주식수'
+				AND DATE <= '%s'
 			) T1
             
             WHERE 1=1
@@ -221,7 +222,7 @@ WHERE RS.DATE = '%s'
 
 ;
 
-''' %(stockcode,date)
+''' %(date,stockcode,date)
     db.insert(query)
 
 
