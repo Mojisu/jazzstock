@@ -28,6 +28,7 @@ def mergeforwin(stockcode):
     dt = rt[0]
 
     codeDic = {
+
     '36': 'MG',
     '45': 'GM',
     '42': 'CS',
@@ -38,6 +39,11 @@ def mergeforwin(stockcode):
     '54': 'NM',
     '58': 'DC',
     '61': 'DW',
+    '33': 'JP',
+    '06': 'SY',
+    '03': 'HT',
+    '37': 'CT'
+
     }
 
 
@@ -56,10 +62,12 @@ def mergeforwin(stockcode):
         ndf = pd.concat([ndf,eachdf],axis=1,sort=False)
 
     ndf['DATE'] = ndf.DATE.apply(str)
+
+    print(ndf)
     data = str([tuple(l) for l in ndf.values.tolist()])
     insertquery =  '''INSERT INTO jazzdb.T_STOCK_SND_WINDOW_MERGED VALUES ''' + str(data)[1:-1]
 
-    db.insert(insertquery)
+    # db.insert(insertquery)
 
 
 def db_readAll(dt):
@@ -105,3 +113,5 @@ for i,eachCode in enumerate(codeDic.keys()):
     except:
         print('error발생',i,eachCode,codeDic[eachCode])
 
+# mergeforwin('053580')
+# mergeforwin('079940')
