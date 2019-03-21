@@ -100,7 +100,7 @@ itemDic, codeDic = {},{}
 
 
 todaydate = dt.now().date()
-db_readAll('2019-03-18')
+db_readAll(todaydate)
 
 
 start = dt.now()
