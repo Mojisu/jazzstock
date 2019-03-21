@@ -63,11 +63,11 @@ def mergeforwin(stockcode):
 
     ndf['DATE'] = ndf.DATE.apply(str)
 
-    print(ndf)
+    # print(ndf)
     data = str([tuple(l) for l in ndf.values.tolist()])
     insertquery =  '''INSERT INTO jazzdb.T_STOCK_SND_WINDOW_MERGED VALUES ''' + str(data)[1:-1]
 
-    # db.insert(insertquery)
+    db.insert(insertquery)
 
 
 def db_readAll(dt):
@@ -100,7 +100,7 @@ itemDic, codeDic = {},{}
 
 
 todaydate = dt.now().date()
-db_readAll(todaydate)
+db_readAll('2019-03-18')
 
 
 start = dt.now()
