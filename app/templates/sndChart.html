@@ -5,7 +5,97 @@
 
 <div class="jumbo">
 
+
+
     <h3>{{stockname[0]}} ({{stockname[1]}})</h3>
+
+
+    <table id="sndrank" class="sortable" style="margin-left: 70px;">
+        <tr>
+
+            {% for eachcol in column %}
+                {% if eachcol !='MARKET' and eachcol !='STOCKNAME' and eachcol !='CATEGORY' %}
+                    <th>{{eachcol}}</th>
+                {% endif %}
+            {% endfor %}
+        </tr>
+
+        {% for value in sndInfo.result %}
+
+
+        <tr>
+            {% for eachcol in column %}
+
+                {% if eachcol=='MARKET' or eachcol =='CATEGORY' or eachcol =='STOCKNAME'%}
+
+
+                {% elif eachcol =='DATE'  %}
+                    <td nowrap>{{value[eachcol]}}</td>
+
+                {% elif eachcol=='MC' or eachcol =='CNT' %}
+                    <td>{{value[eachcol]}}</td>
+
+                {% elif eachcol=='CLOSE' %}
+                    <td class="money">{{ "{:,}".format(value[eachcol]) }}</td>
+
+                {% elif eachcol[-1]=='R' %}
+                    <td class="ranking">{{ value[eachcol] }}</td>
+
+
+                {% elif eachcol!='DATE' %}
+
+
+                    {% if value[eachcol] != None and value[eachcol]>=0.25 %}
+                    <td class="profita" style="background-color: #f72525;">
+                    {% elif value[eachcol] != None and value[eachcol]>=0.15 %}
+                    <td class="profitb" style="background-color: #ff6247;">
+                    {% elif value[eachcol] != None and value[eachcol]>=0.1 %}
+                    <td class="profitc" style="background-color: #ff8d7a;">
+                    {% elif value[eachcol] != None and value[eachcol]>=0.05 %}
+                    <td class="profitd" style="background-color: #ffab9e">
+
+                    {% elif value[eachcol] != None and value[eachcol]>=0.03 %}
+                    <td class="profite" style="background-color: #ffe2dd;">
+                    {% elif value[eachcol] != None and value[eachcol]>=0.02 %}
+                    <td class="profite" style="background-color: #ffefed;">
+                    {% elif value[eachcol] != None and value[eachcol]>=0.01 %}
+                    <td class="profite" style="background-color: #fff5f4;">
+
+                    {% elif value[eachcol] != None and value[eachcol]>=-0.01 %}
+                    <td class="profite" style="background-color: #ffffff;">
+
+                    {% elif value[eachcol] != None and value[eachcol]>=-0.02 %}
+                    <td class="profite" style="background-color: #e5f0ff;">
+                    {% elif value[eachcol] != None and value[eachcol]>=-0.03 %}
+                    <td class="profite" style="background-color: #c2dafc;">
+                    {% elif value[eachcol] != None and value[eachcol]>=-0.05 %}
+                    <td class="profite" style="background-color: #a0c7ff;">
+
+                    {% elif value[eachcol] != None and value[eachcol]>=-0.1 %}
+                    <td class="profite" style="background-color: #75aeff;">
+                    {% elif value[eachcol] != None and value[eachcol]>=-0.15 %}
+                    <td class="profite" style="background-color: #5199ff;">
+                    {% elif value[eachcol] != None and value[eachcol]>=-0.25 %}
+                    <td class="profite" style="background-color: #247bf7;">
+                    {% elif value[eachcol] != None and value[eachcol]<-0.25 %}
+                    <td class="profite" style="background-color: #104693;">
+                    {% else %}
+                    <td class="profite" style="background-color: #ffffff;">
+
+
+
+                    {% endif %}
+                    {{ "%.2f"|format(value[eachcol]*100) if value[eachcol] != None else '-'}}</td>
+
+
+                {% endif %}
+            {% endfor %}
+        </tr>
+        {% endfor %}
+
+
+
+    </table>
 
   <label><input type="radio" name="chartType" value="merge" checked=true onclick="myFunction()"><span>Merged</span></label>&nbsp;&nbsp;
   <label><input type="radio" name="chartType" value="ins" onclick="myFunction()"><span>Ins</span></label>&nbsp;&nbsp;

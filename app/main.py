@@ -27,9 +27,13 @@ def sndChart():
     # rs[0] => 종목명이 존재하면
     if (rs[0]):
         chartData = dao.sndChart(requestedCode)
+        sndData = dao.sndInfo(requestedCode)
         infoData = dao.stockinfo(rs[1][1])
 
         recentRowFromDB=copy.deepcopy(chartData['result'][-1])
+
+
+        # print(sndData[0])
 
         # 최신데이터가 없으면 차트데이터에 가격만 붙여주는 작업
         # print('[DEBUG] ',rs[1])
@@ -41,7 +45,7 @@ def sndChart():
             for each in recentRowFromDB.keys():
                 if(each in infoData.keys()):
                     recentRowFromDB[each] = infoData[each]
-                    print(each,recentRowFromDB[each])
+                    # print(each,recentRowFromDB[each])
                 elif(each not in ['STOCKNAME','STOCKCODE','ADJRATIO']):
                     recentRowFromDB[each] = 0
 
@@ -50,7 +54,7 @@ def sndChart():
             infoData=chartData['result'][-1]
 
 
-    return render_template('sndChart.html', stockinfo=infoData, sampledata=chartData,stockname=rs[1])
+    return render_template('sndChart.html', stockinfo=infoData, sampledata=chartData,stockname=rs[1], column=sndData[1], sndInfo=sndData[0])
 
 
 @application.route('/sndRankRelative', methods=['GET','POST'])

@@ -66,7 +66,10 @@ var yg = new Array;
 var samo = new Array;
 var tusin = new Array;
 var finan = new Array;
-var nation = new Array;
+
+var othercorpor = new Array;
+var bank = new Array;
+var insur = new Array;
 
 var mg = new Array;
 var gm = new Array;
@@ -79,6 +82,11 @@ var ub = new Array;
 var nm = new Array;
 var dc = new Array;
 var dw = new Array;
+
+var jp = new Array;
+var sy = new Array;
+var ht = new Array;
+var ct = new Array;
 
 for(var i = 0; i <data.length; i++){
     data_array.push([data[i].OPEN, data[i].CLOSE, data[i].LOW, data[i].HIGH, data[i].VOLUME, data[i].DATE]);
@@ -93,7 +101,11 @@ for(var i = 0; i <data.length; i++){
     samo.push(data[i].SAMO)
     tusin.push(data[i].TUSIN)
     finan.push(data[i].FINAN)
-    nation.push(data[i].NATION)
+
+    othercorpor.push(data[i].OTHERCORPOR)
+    bank.push(data[i].BANK)
+    insur.push(data[i].INSUR)
+
 
     mg.push(data[i].MG)
     gm.push(data[i].GM)
@@ -107,6 +119,11 @@ for(var i = 0; i <data.length; i++){
     dc.push(data[i].DC)
     dw.push(data[i].DW)
 
+    jp.push(data[i].JP)
+    sy.push(data[i].SY)
+    ht.push(data[i].HT)
+    ct.push(data[i].CT)
+
 }
 
 var inscumsum = calculateCumSum(ins)
@@ -117,7 +134,10 @@ var ygcumsum = calculateCumSum(yg)
 var samocumsum = calculateCumSum(samo)
 var tusincumsum = calculateCumSum(tusin)
 var financumsum = calculateCumSum(finan)
-var nationcumsum = calculateCumSum(nation)
+
+var othercorporcumsum = calculateCumSum(othercorpor)
+var bankcumsum = calculateCumSum(bank)
+var insurcumsum = calculateCumSum(insur)
 
 var mgcumsum = calculateCumSum(mg)
 var gmcumsum = calculateCumSum(gm)
@@ -131,6 +151,12 @@ var nmcumsum = calculateCumSum(nm)
 var dccumsum = calculateCumSum(dc)
 var dwcumsum = calculateCumSum(dw)
 
+var jpcumsum = calculateCumSum(jp)
+var sycumsum = calculateCumSum(sy)
+var htcumsum = calculateCumSum(ht)
+var ctcumsum = calculateCumSum(ct)
+
+
 ins = separatePlusMinus(ins)
 forei = separatePlusMinus(forei)
 per = separatePlusMinus(per)
@@ -138,7 +164,11 @@ yg = separatePlusMinus(yg)
 samo = separatePlusMinus(samo)
 tusin = separatePlusMinus(tusin)
 finan = separatePlusMinus(finan)
-nation = separatePlusMinus(nation)
+
+
+othercorpor = separatePlusMinus(othercorpor)
+bank = separatePlusMinus(bank)
+insur = separatePlusMinus(insur)
 
 mg= separatePlusMinus(mg)
 gm= separatePlusMinus(gm)
@@ -150,6 +180,11 @@ ub= separatePlusMinus(ub)
 nm= separatePlusMinus(nm)
 dc= separatePlusMinus(dc)
 dw= separatePlusMinus(dw)
+
+jp= separatePlusMinus(jp)
+sy= separatePlusMinus(sy)
+ht= separatePlusMinus(ht)
+ct= separatePlusMinus(ct)
 
 
 var dataMA5 = calculateMA(5, data_array);
@@ -195,7 +230,11 @@ if (flag =='merge'){
             '연기금':true,
             '투신':false,
             '금융':false,
-            '국가':false,
+
+            '기타법인':false,
+            '은행':false,
+            '보험':false,
+
             '모건':false,
             '골드만':false,
             'CS':false,
@@ -207,12 +246,19 @@ if (flag =='merge'){
             '도이치':false,
             '다이와':false,
 
+            '한투':false,
+            '신영':false,
+            '제이피':false,
+            '씨티':false,
+
+
 
             },
-            data: ['기관','외인','개인',''
-            ,'사모펀드','연기금','투신','금융','국가',''
+            data: ['기관','외인','개인','사모펀드','연기금',''
+            ,'투신','금융','기타법인','은행','보험',''
             ,'모건','골드만','CS','메릴','맥쿼리',''
-            ,'CLSA','UBS','노무라','도이치','다이와']
+            ,'CLSA','UBS','노무라','도이치','다이와',''
+            ,'한투','신영','제이피','씨티']
         },
         tooltip: {
 
@@ -560,21 +606,52 @@ if (flag =='merge'){
                 type:'dashed'
             }
         },
+
         {
-            name: '국가',
+            name: '기타법인',
             type: 'line',
             smooth: true,
             showSymbol: false,
             xAxisIndex: 2, // Index 를 맞춰줘야 함
             yAxisIndex: 2, // Index 를 맞춰줘야 함
-            data: nationcumsum,
+            data: othercorporcumsum,
             itemStyle: {
-                color: '#C48F65',
+                color: '#D5AE41',
             },
             lineStyle: {
                 type:'dashed'
-            }
-        }
+            },
+        } ,
+        {
+            name: '보험',
+            type: 'line',
+            smooth: true,
+            showSymbol: false,
+            xAxisIndex: 2, // Index 를 맞춰줘야 함
+            yAxisIndex: 2, // Index 를 맞춰줘야 함
+            data: insurcumsum,
+            itemStyle: {
+                color: '#D5AE41',
+            },
+            lineStyle: {
+                type:'dashed'
+            },
+        } ,
+        {
+            name: '은행',
+            type: 'line',
+            smooth: true,
+            showSymbol: false,
+            xAxisIndex: 2, // Index 를 맞춰줘야 함
+            yAxisIndex: 2, // Index 를 맞춰줘야 함
+            data: bankcumsum,
+            itemStyle: {
+                color: '#D5AE41',
+            },
+            lineStyle: {
+                type:'dashed'
+            },
+        } ,
             , {
             name: '모건',
             type: 'line',
@@ -709,6 +786,62 @@ if (flag =='merge'){
             xAxisIndex: 2, // Index 를 맞춰줘야 함
             yAxisIndex: 2, // Index 를 맞춰줘야 함
             data: dwcumsum,
+            itemStyle: {
+                color: '#7e4a35',
+            },
+            lineStyle: {
+                type:'dashed'
+            }
+        }, {
+            name: '제이피',
+            type: 'line',
+            smooth: true,
+            showSymbol: false,
+            xAxisIndex: 2, // Index 를 맞춰줘야 함
+            yAxisIndex: 2, // Index 를 맞춰줘야 함
+            data: jpcumsum,
+            itemStyle: {
+                color: '#7e4a35',
+            },
+            lineStyle: {
+                type:'dashed'
+            }
+        }, {
+            name: '씨티',
+            type: 'line',
+            smooth: true,
+            showSymbol: false,
+            xAxisIndex: 2, // Index 를 맞춰줘야 함
+            yAxisIndex: 2, // Index 를 맞춰줘야 함
+            data: ctcumsum,
+            itemStyle: {
+                color: '#7e4a35',
+            },
+            lineStyle: {
+                type:'dashed'
+            }
+        }, {
+            name: '신영',
+            type: 'line',
+            smooth: true,
+            showSymbol: false,
+            xAxisIndex: 2, // Index 를 맞춰줘야 함
+            yAxisIndex: 2, // Index 를 맞춰줘야 함
+            data: sycumsum,
+            itemStyle: {
+                color: '#7e4a35',
+            },
+            lineStyle: {
+                type:'dashed'
+            }
+        }, {
+            name: '한투',
+            type: 'line',
+            smooth: true,
+            showSymbol: false,
+            xAxisIndex: 2, // Index 를 맞춰줘야 함
+            yAxisIndex: 2, // Index 를 맞춰줘야 함
+            data: htcumsum,
             itemStyle: {
                 color: '#7e4a35',
             },
@@ -853,6 +986,24 @@ myChart.setOption({
             left: '10%',
             right: '8%',
             top: '1100',
+            height: '80',
+            show: true
+        }
+
+
+        , {
+            left: '10%',
+            right: '8%',
+            top: '1200',
+            height: '80',
+            show: true
+        }
+
+
+        , {
+            left: '10%',
+            right: '8%',
+            top: '1300',
             height: '80',
             show: true
         }
@@ -1019,10 +1170,44 @@ myChart.setOption({
         }
 
         , {
-            name: '국가',
+            name: '기타법인',
             nameLocation:"start",
             type: 'category',
             gridIndex: 9, // Index 를 맞춰줘야 함
+            data: dates,
+            scale: true,
+            boundaryGap : false,
+            axisLine: {onZero: true},
+            axisTick: {show: false},
+            splitLine: {show: true},
+            axisLabel: {show: false},
+            splitNumber: 20,
+            min: 'dataMin',
+            max: 'dataMax'
+        }
+
+        , {
+            name: '보험',
+            nameLocation:"start",
+            type: 'category',
+            gridIndex: 10, // Index 를 맞춰줘야 함
+            data: dates,
+            scale: true,
+            boundaryGap : false,
+            axisLine: {onZero: true},
+            axisTick: {show: false},
+            splitLine: {show: true},
+            axisLabel: {show: false},
+            splitNumber: 20,
+            min: 'dataMin',
+            max: 'dataMax'
+        }
+
+        , {
+            name: '은행',
+            nameLocation:"start",
+            type: 'category',
+            gridIndex: 11, // Index 를 맞춰줘야 함
             data: dates,
             scale: true,
             boundaryGap : false,
@@ -1174,13 +1359,45 @@ myChart.setOption({
             axisTick: {show: false},
             splitLine: {show: false}
         }
+
+
+        , {
+
+            scale: true,
+            position: 'right',
+            gridIndex: 10, // Index 를 맞춰줘야 함
+            splitNumber: 2,
+            axisLabel: {
+                show: true,
+                fontSize: 10,
+            },
+            axisLine: {show: false},
+            axisTick: {show: false},
+            splitLine: {show: false}
+        }
+
+
+        , {
+
+            scale: true,
+            position: 'right',
+            gridIndex: 11, // Index 를 맞춰줘야 함
+            splitNumber: 2,
+            axisLabel: {
+                show: true,
+                fontSize: 10,
+            },
+            axisLine: {show: false},
+            axisTick: {show: false},
+            splitLine: {show: false}
+        }
         // Add graph End y-Grid
     ],
     dataZoom: [
         {
             type: 'inside',
             // 그래프 추가 될 시 x-axis index 추가
-            xAxisIndex: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+            xAxisIndex: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,11],
             start: 66,
             end: 100
         },
@@ -1506,11 +1723,11 @@ myChart.setOption({
     }
 
     , {
-        name: '국가',
+        name: '기법',
         type: 'bar',
         xAxisIndex: 9, // Index 를 맞춰줘야 함
         yAxisIndex: 9, // Index 를 맞춰줘야 함
-        data: nation.plus,
+        data: othercorpor.plus,
         itemStyle: {
             color: downColor
         }
@@ -1518,11 +1735,11 @@ myChart.setOption({
 
 
     , {
-        name: '국가',
+        name: '기법',
         type: 'bar',
         xAxisIndex: 9, // Index 를 맞춰줘야 함
         yAxisIndex: 9, // Index 를 맞춰줘야 함
-        data: nation.minus,
+        data: othercorpor.minus,
         itemStyle: {
             color: upColor
         }
@@ -1533,7 +1750,76 @@ myChart.setOption({
         xAxisIndex: 9, // Index 를 맞춰줘야 함
         yAxisIndex: 9, // Index 를 맞춰줘야 함
         showSymbol: false,
-        data: nationcumsum,
+        data: othercorporcumsum,
+        lineStyle: {
+            color: '#eda944',
+            type:'dashed'
+        }
+    }
+
+
+        , {
+        name: '보험',
+        type: 'bar',
+        xAxisIndex: 10, // Index 를 맞춰줘야 함
+        yAxisIndex: 10, // Index 를 맞춰줘야 함
+        data: insur.plus,
+        itemStyle: {
+            color: downColor
+        }
+    }
+
+
+    , {
+        name: '보험',
+        type: 'bar',
+        xAxisIndex: 10, // Index 를 맞춰줘야 함
+        yAxisIndex: 10, // Index 를 맞춰줘야 함
+        data: insur.minus,
+        itemStyle: {
+            color: upColor
+        }
+    }
+
+            , {
+        type: 'line',
+        xAxisIndex: 10, // Index 를 맞춰줘야 함
+        yAxisIndex: 10, // Index 를 맞춰줘야 함
+        showSymbol: false,
+        data: insurcumsum,
+        lineStyle: {
+            color: '#eda944',
+            type:'dashed'
+        }
+    }    , {
+        name: '은행',
+        type: 'bar',
+        xAxisIndex: 11, // Index 를 맞춰줘야 함
+        yAxisIndex: 11, // Index 를 맞춰줘야 함
+        data: bank.plus,
+        itemStyle: {
+            color: downColor
+        }
+    }
+
+
+    , {
+        name: '은행',
+        type: 'bar',
+        xAxisIndex: 11, // Index 를 맞춰줘야 함
+        yAxisIndex: 11, // Index 를 맞춰줘야 함
+        data: bank.minus,
+        itemStyle: {
+            color: upColor
+        }
+    }
+
+            , {
+        type: 'line',
+        xAxisIndex: 11, // Index 를 맞춰줘야 함
+        yAxisIndex: 11, // Index 를 맞춰줘야 함
+        showSymbol: false,
+        data: bankcumsum,
         lineStyle: {
             color: '#eda944',
             type:'dashed'
@@ -1685,6 +1971,32 @@ myChart.setOption({
             left: '10%',
             right: '8%',
             top: '1300',
+            height: '80',
+            show: true
+        }
+
+                , {
+            left: '10%',
+            right: '8%',
+            top: '1400',
+            height: '80',
+            show: true
+        }        , {
+            left: '10%',
+            right: '8%',
+            top: '1500',
+            height: '80',
+            show: true
+        }        , {
+            left: '10%',
+            right: '8%',
+            top: '1600',
+            height: '80',
+            show: true
+        }        , {
+            left: '10%',
+            right: '8%',
+            top: '1700',
             height: '80',
             show: true
         }
@@ -1894,6 +2206,66 @@ myChart.setOption({
             splitNumber: 20,
             min: 'dataMin',
             max: 'dataMax'
+        }        , {
+            name: 'JP',
+            nameLocation:"start",
+            type: 'category',
+            gridIndex: 12, // Index 를 맞춰줘야 함
+            data: dates,
+            scale: true,
+            boundaryGap : false,
+            axisLine: {onZero: true},
+            axisTick: {show: false},
+            splitLine: {show: true},
+            axisLabel: {show: false},
+            splitNumber: 20,
+            min: 'dataMin',
+            max: 'dataMax'
+        }        , {
+            name: 'CT',
+            nameLocation:"start",
+            type: 'category',
+            gridIndex: 13, // Index 를 맞춰줘야 함
+            data: dates,
+            scale: true,
+            boundaryGap : false,
+            axisLine: {onZero: true},
+            axisTick: {show: false},
+            splitLine: {show: true},
+            axisLabel: {show: false},
+            splitNumber: 20,
+            min: 'dataMin',
+            max: 'dataMax'
+        }        , {
+            name: '신영',
+            nameLocation:"start",
+            type: 'category',
+            gridIndex: 14, // Index 를 맞춰줘야 함
+            data: dates,
+            scale: true,
+            boundaryGap : false,
+            axisLine: {onZero: true},
+            axisTick: {show: false},
+            splitLine: {show: true},
+            axisLabel: {show: false},
+            splitNumber: 20,
+            min: 'dataMin',
+            max: 'dataMax'
+        }        , {
+            name: '한투',
+            nameLocation:"start",
+            type: 'category',
+            gridIndex: 15, // Index 를 맞춰줘야 함
+            data: dates,
+            scale: true,
+            boundaryGap : false,
+            axisLine: {onZero: true},
+            axisTick: {show: false},
+            splitLine: {show: true},
+            axisLabel: {show: false},
+            splitNumber: 20,
+            min: 'dataMin',
+            max: 'dataMax'
         }
         // Add graph End x-Grid
     ],
@@ -2067,13 +2439,67 @@ myChart.setOption({
             axisTick: {show: false},
             splitLine: {show: false}
         }
+
+                , {
+
+            scale: true,
+            position: 'right',
+            gridIndex:12, // Index 를 맞춰줘야 함
+            splitNumber: 2,
+            axisLabel: {
+                show: true,
+                fontSize: 10,
+            },
+            axisLine: {show: false},
+            axisTick: {show: false},
+            splitLine: {show: false}
+        }        , {
+
+            scale: true,
+            position: 'right',
+            gridIndex:13, // Index 를 맞춰줘야 함
+            splitNumber: 2,
+            axisLabel: {
+                show: true,
+                fontSize: 10,
+            },
+            axisLine: {show: false},
+            axisTick: {show: false},
+            splitLine: {show: false}
+        }        , {
+
+            scale: true,
+            position: 'right',
+            gridIndex:14, // Index 를 맞춰줘야 함
+            splitNumber: 2,
+            axisLabel: {
+                show: true,
+                fontSize: 10,
+            },
+            axisLine: {show: false},
+            axisTick: {show: false},
+            splitLine: {show: false}
+        }        , {
+
+            scale: true,
+            position: 'right',
+            gridIndex:15, // Index 를 맞춰줘야 함
+            splitNumber: 2,
+            axisLabel: {
+                show: true,
+                fontSize: 10,
+            },
+            axisLine: {show: false},
+            axisTick: {show: false},
+            splitLine: {show: false}
+        }
         // Add graph End y-Grid
     ],
     dataZoom: [
         {
             type: 'inside',
             // 그래프 추가 될 시 x-axis index 추가
-            xAxisIndex: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+            xAxisIndex: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
             start: 66,
             end: 100
         },
@@ -2503,6 +2929,158 @@ myChart.setOption({
         }
     }
 
+
+
+
+
+
+        , {
+        name: 'JP',
+        type: 'bar',
+        xAxisIndex: 12, // Index 를 맞춰줘야 함
+        yAxisIndex: 12, // Index 를 맞춰줘야 함
+        data: jp.plus,
+        itemStyle: {
+            color: downColor
+        }
+    }
+
+
+    , {
+        name: 'JP',
+        type: 'bar',
+        xAxisIndex: 12, // Index 를 맞춰줘야 함
+        yAxisIndex: 12, // Index 를 맞춰줘야 함
+        data: jp.minus,
+        itemStyle: {
+            color: upColor
+        }
+    }
+
+            , {
+        type: 'line',
+        xAxisIndex: 12, // Index 를 맞춰줘야 함
+        yAxisIndex: 12, // Index 를 맞춰줘야 함
+        showSymbol: false,
+        data: jpcumsum,
+        lineStyle: {
+            color: '#eda944',
+            type:'dashed'
+        }
+    }
+
+
+
+
+            , {
+        name: 'CT',
+        type: 'bar',
+        xAxisIndex: 13, // Index 를 맞춰줘야 함
+        yAxisIndex: 13, // Index 를 맞춰줘야 함
+        data: ct.plus,
+        itemStyle: {
+            color: downColor
+        }
+    }
+
+
+    , {
+        name: 'CT',
+        type: 'bar',
+        xAxisIndex: 13, // Index 를 맞춰줘야 함
+        yAxisIndex: 13, // Index 를 맞춰줘야 함
+        data: ct.minus,
+        itemStyle: {
+            color: upColor
+        }
+    }
+
+            , {
+        type: 'line',
+        xAxisIndex: 13, // Index 를 맞춰줘야 함
+        yAxisIndex: 13, // Index 를 맞춰줘야 함
+        showSymbol: false,
+        data: ctcumsum,
+        lineStyle: {
+            color: '#eda944',
+            type:'dashed'
+        }
+    }
+
+
+
+            , {
+        name: '신영',
+        type: 'bar',
+        xAxisIndex: 14, // Index 를 맞춰줘야 함
+        yAxisIndex: 14, // Index 를 맞춰줘야 함
+        data: sy.plus,
+        itemStyle: {
+            color: downColor
+        }
+    }
+
+
+    , {
+        name: '신영',
+        type: 'bar',
+        xAxisIndex: 14, // Index 를 맞춰줘야 함
+        yAxisIndex: 14, // Index 를 맞춰줘야 함
+        data: sy.minus,
+        itemStyle: {
+            color: upColor
+        }
+    }
+
+            , {
+        type: 'line',
+        xAxisIndex: 14, // Index 를 맞춰줘야 함
+        yAxisIndex: 14, // Index 를 맞춰줘야 함
+        showSymbol: false,
+        data: sycumsum,
+        lineStyle: {
+            color: '#eda944',
+            type:'dashed'
+        }
+    }
+
+
+
+
+            , {
+        name: '신영',
+        type: 'bar',
+        xAxisIndex: 15, // Index 를 맞춰줘야 함
+        yAxisIndex: 15, // Index 를 맞춰줘야 함
+        data: ht.plus,
+        itemStyle: {
+            color: downColor
+        }
+    }
+
+
+    , {
+        name: '신영',
+        type: 'bar',
+        xAxisIndex: 15, // Index 를 맞춰줘야 함
+        yAxisIndex: 15, // Index 를 맞춰줘야 함
+        data: ht.minus,
+        itemStyle: {
+            color: upColor
+        }
+    }
+
+            , {
+        type: 'line',
+        xAxisIndex: 15, // Index 를 맞춰줘야 함
+        yAxisIndex: 15, // Index 를 맞춰줘야 함
+        showSymbol: false,
+        data: htcumsum,
+        lineStyle: {
+            color: '#eda944',
+            type:'dashed'
+        }
+    }
     // Add graph End
     ]
 });

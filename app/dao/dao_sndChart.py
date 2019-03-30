@@ -33,7 +33,7 @@ class Database:
                                , C.VOLUME
                                , C.FOREI
                                , C.INS, C.PER, C.YG, C.SAMO, C.TUSIN, C.FINAN, C.BANK, C.NATION, C.INSUR, C.OTHERCORPOR, C.OTHERFOR, C.OTHERFINAN
-                               , MG, GM, CS, MR, MQ, CL, UB, NM, DC, DW
+                               , MG, GM, CS, MR, MQ, CL, UB, NM, DC, DW, JP, CT, SY, HT
 
 
                             FROM
@@ -67,7 +67,7 @@ class Database:
                             ) C ON (A.STOCKCODE = C.STOCKCODE AND A.DATE = C.DATE )
                             
 							JOIN (
-                               SELECT STOCKCODE, DATE, MG, GM, CS, MR, MQ, CL, UB, NM, DC, DW
+                               SELECT STOCKCODE, DATE, MG, GM, CS, MR, MQ, CL, UB, NM, DC, DW, JP, CT, SY, HT
                                FROM jazzdb.T_STOCK_SND_WINDOW_MERGED
                             ) D ON (A.STOCKCODE = D.STOCKCODE AND A.DATE = D.DATE );
         ''' % (code, code)
@@ -80,6 +80,78 @@ class Database:
 
         self.closeConn()
         return rt
+
+
+
+    def sndInfo(self,code):
+        self.getConn()
+        cursor = self.cnxn.cursor()
+        query = '''
+                        
+                SELECT B.STOCKNAME
+                    , CASE WHEN B.MARKET = '0' THEN '' ELSE '*' END AS MARKET
+                    , CASE WHEN E.CATEGORY IS NULL THEN 'NONE' ELSE E.CATEGORY END AS CATEGORY
+                    , DATE
+                    , CLOSE,
+                
+                P1, P5, P20, I1, I5, I20, F1, F5, F20, PS1, PS5, PS20, IR, FR, PR
+                
+                FROM jazzdb.T_STOCK_SND_ANALYSIS_RESULT_TEMP A
+                JOIN (
+                    SELECT STOCKCODE, STOCKNAME, MARKET
+                    FROM jazzdb.T_STOCK_CODE_MGMT 
+                    WHERE (STOCKCODE = '%s' OR STOCKNAME = '%s')
+                ) B USING (STOCKCODE)
+                JOIN jazzdb.T_DATE_INDEXED C USING (DATE)
+                JOIN (
+                
+                    SELECT STOCKCODE, SHARE
+                    FROM
+                    (
+                        SELECT STOCKCODE, SHARE, DATE,
+                            ROW_NUMBER() OVER (PARTITION BY STOCKCODE ORDER BY DATE DESC) AS RN 
+                        FROM jazzdb.T_STOCK_SHARES_INFO
+                        WHERE 1=1
+                        AND HOLDER = '발행주식수'
+                    ) A
+                    WHERE A.RN = 1
+                
+                ) D USING (STOCKCODE)
+                LEFT JOIN ( 
+                SELECT STOCKCODE, GROUP_CONCAT(CATEGORY) AS CATEGORY
+                FROM jazzdb.T_STOCK_CATEGORY_ROBO
+                GROUP BY STOCKCODE 
+                )E
+                USING(STOCKCODE)
+                WHERE 1=1
+                
+                AND B.MARKET IN ('0', '1') 
+                AND (
+                
+                FORMAT(D.SHARE*CLOSE/100000000000,1) BETWEEN 0 and 0.8 
+                OR FORMAT(D.SHARE*CLOSE/100000000000,1) BETWEEN 0.8 and 2 
+                OR FORMAT(D.SHARE*CLOSE/100000000000,1) BETWEEN 2 and 4 
+                OR FORMAT(D.SHARE*CLOSE/100000000000,1) BETWEEN 4 and 8 
+                OR FORMAT(D.SHARE*CLOSE/100000000000,1) BETWEEN 8 and 10 
+                OR FORMAT(D.SHARE*CLOSE/100000000000,1) BETWEEN 10 and 500 
+                
+                )
+                
+                AND C.CNT IN (0,1,2,3,5,10,20,60)
+                ORDER BY DATE DESC
+        
+        ''' %(code,code)
+
+        cursor.execute(query)
+        column = cursor.column_names
+        rt = {'result':
+                  [dict(zip([column[0] for column in cursor.description], row))
+                   for row in cursor.fetchall()]}
+
+
+
+        self.closeConn()
+        return rt, column
 
     def sndRank(self, column, interval, order, by, market, mcrange):
 
@@ -106,7 +178,15 @@ class Database:
             for eachinterval in interval:
                 querycont = querycont + str(eachcolumn)+str(eachinterval)+', '
 
-        querycont = querycont + order[0] + 'R'
+        if(order[0]=='YG'):
+            temp = 'Y'
+
+        elif(order[0]=='PS'):
+            temp = 'P'
+        else:
+            temp = order[0]
+        querycont = querycont + temp + 'R'
+
         #print('[DEBUG]' , querycont)
 
         querytail= '''
@@ -161,7 +241,7 @@ class Database:
         '''%(order[0],by[0])
 
         fullquery = queryhead + querycont + querytail + querycond + queryend
-        #print('fq: \n ', fullquery)
+        # print('fq: \n ', fullquery)
 
         self.getConn()
         cursor = self.cnxn.cursor()
